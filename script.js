@@ -204,9 +204,7 @@ function renderSubject(key, initial = false) {
       // Re-enter with a fresh animation after the wipe has covered the scene.
       void sceneArt.getBoundingClientRect();
       explorerScene.classList.add("is-changing");
-      window.requestAnimationFrame(() => {
-        window.requestAnimationFrame(() => explorerScene.classList.remove("is-changing"));
-      });
+      window.setTimeout(() => explorerScene.classList.remove("is-changing"), reduceMotion ? 0 : 260);
     }, initial ? 0 : 220);
   }
 }
@@ -243,7 +241,7 @@ explorerOptions.forEach((button) => {
       explorerScene.classList.remove("is-changing");
       void sceneArt.getBoundingClientRect();
       explorerScene.classList.add("is-changing");
-      window.setTimeout(() => explorerScene.classList.remove("is-changing"), 650);
+      window.setTimeout(() => explorerScene.classList.remove("is-changing"), reduceMotion ? 0 : 260);
       return;
     }
     renderSubject(button.dataset.subject);
