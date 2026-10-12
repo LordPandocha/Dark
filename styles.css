@@ -499,3 +499,74 @@ html { -webkit-overflow-scrolling: touch; }
   .course-explorer.is-scene-only .explorer-cta,
   .course-explorer.is-scene-only .explorer-cta.is-ready { transition: none !important; }
 }
+
+
+/* Visual refresh: softer lavender paper, restrained grid, and a framed bottom CTA. */
+:root {
+  --paper: #f6f5fb;
+  --grid: #e4e1f0;
+  --ink: #191b35;
+  --muted: #666982;
+  --blue: #303b87;
+  --blue-bright: #5364c8;
+  --night: #171a3b;
+  --red: #d65d68;
+  --lilac: #e8e5fa;
+  --line: #dfdeed;
+}
+body {
+  background-color: var(--paper);
+  background-image:
+    radial-gradient(ellipse at 78% 8%, rgba(207, 199, 255, .25), transparent 38%),
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: auto, 36px 36px, 36px 36px;
+}
+.site-header {
+  background: rgba(246, 245, 251, .94);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+.mobile-nav {
+  background: rgba(246, 245, 251, .98);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+/* Avoid promoting every off-screen reveal to its own compositor layer. */
+.js .reveal:not(.is-visible) { will-change: auto; }
+.course-explorer {
+  background: #17182f;
+}
+.explorer-shell { background: #f6f5fb; }
+.explorer-info { background: #f6f5fb; }
+.explorer-topbar, .explorer-bottom { background: #f6f5fb; }
+.explorer-scene { background-color: #303b87; }
+.explorer-scene.scene-math { background-color: #50418b; }
+.explorer-scene.scene-russian { background-color: #1d655a; }
+.explorer-scene.scene-oge { background-color: #874653; }
+.course-explorer.is-scene-only .explorer-cta {
+  bottom: max(38px, calc(env(safe-area-inset-bottom) + 28px));
+  min-height: 60px;
+  padding: 0 22px;
+  border: 1px solid rgba(255,255,255,.82);
+  border-radius: 22px;
+  background: linear-gradient(135deg, #35438f, #242d69);
+  box-shadow:
+    0 0 0 6px rgba(255,255,255,.10),
+    0 12px 34px rgba(7,10,38,.32),
+    inset 0 1px 0 rgba(255,255,255,.18);
+  letter-spacing: .01em;
+}
+.course-explorer.is-scene-only .explorer-cta:hover {
+  background: linear-gradient(135deg, #4657b0, #303b87);
+  box-shadow:
+    0 0 0 6px rgba(255,255,255,.14),
+    0 14px 38px rgba(7,10,38,.36),
+    inset 0 1px 0 rgba(255,255,255,.24);
+}
+@media (max-width: 680px) {
+  .course-explorer.is-scene-only .explorer-cta {
+    bottom: max(34px, calc(env(safe-area-inset-bottom) + 24px));
+    width: min(360px, calc(100% - 40px));
+  }
+}
