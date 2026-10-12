@@ -590,7 +590,7 @@ body {
   font-size:9px !important;
   line-height:1.3 !important;
 }
-.course-explorer.is-scene-only .float-card-a { left:12px !important; top:24% !important; }
+.course-explorer.is-scene-only .float-card-a { left:12px !important; top:16% !important; }
 .course-explorer.is-scene-only .float-card-b { right:12px !important; bottom:29% !important; }
 .course-explorer.is-scene-only .scene-footer {
   left:16px !important;
@@ -729,7 +729,7 @@ body {
   .course-explorer:not(.is-scene-only) .explorer-cta.is-ready { transform:translateY(0) !important; }
   .course-explorer:not(.is-scene-only) .explorer-info { padding-bottom:120px !important; }
   .course-explorer.is-scene-only .scene-art { inset:14% 0 27% !important; }
-  .course-explorer.is-scene-only .float-card-a { top:25% !important; }
+  .course-explorer.is-scene-only .float-card-a { top:16% !important; }
   .course-explorer.is-scene-only .float-card-b { bottom:29% !important; }
 }
 @media (min-width:681px) {
