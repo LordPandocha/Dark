@@ -200,7 +200,7 @@ function renderSubject(key, initial = false) {
       sceneConcept.textContent = data.concept;
       sceneCaption.textContent = data.caption;
       sceneArt.setAttribute("aria-label", `Анимированная визуализация: ${data.title}`);
-      sceneArt.innerHTML = data.svg;
+      sceneArt.innerHTML = `<defs><filter id="scene-glow"><feGaussianBlur stdDeviation="5" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>${data.svg}`;
       // Re-enter with a fresh animation after the wipe has covered the scene.
       void sceneArt.getBoundingClientRect();
       explorerScene.classList.add("is-changing");
