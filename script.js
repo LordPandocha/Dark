@@ -34,7 +34,8 @@ function updateProgress() {
   if (!progress) return;
   const root = document.documentElement;
   const scrollable = root.scrollHeight - root.clientHeight;
-  const amount = scrollable > 0 ? root.scrollTop / scrollable : 0;
+  const currentScroll = window.scrollY || root.scrollTop || document.body.scrollTop || 0;
+  const amount = scrollable > 0 ? currentScroll / scrollable : 0;
   progress.style.transform = `scaleX(${Math.min(1, Math.max(0, amount))})`;
   scrollQueued = false;
 }
@@ -296,8 +297,28 @@ explorerOptions.forEach((button) => {
 });
 document.addEventListener("keydown", (event) => {
   if (!explorer || explorer.hidden) return;
-  if (event.key === "Escape") closeExplorer();
-  if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+  if (event.key === "Escape") {
+    event.preventDefault();
+    closeExplorer();
+    return;
+  }
+  if (event.key === "Tab") {
+    const focusable = [...explorer.querySelectorAll('a[href]:not([tabindex="-1"]), button:not([disabled]):not([tabindex="-1"]), [tabindex]:not([tabindex="-1"])')]
+      .filter((element) => !element.hidden && element.getAttribute("aria-hidden") !== "true");
+    if (!focusable.length) return;
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (event.shiftKey && (document.activeElement === first || !explorer.contains(document.activeElement))) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && (document.activeElement === last || !explorer.contains(document.activeElement))) {
+      event.preventDefault();
+      first.focus();
+    }
+    return;
+  }
+  if ((event.key === "ArrowDown" || event.key === "ArrowUp") && explorerOptions.includes(document.activeElement)) {
+    event.preventDefault();
     const index = explorerOptions.findIndex((button) => button.dataset.subject === activeSubject);
     const next = (index + (event.key === "ArrowDown" ? 1 : explorerOptions.length - 1)) % explorerOptions.length;
     explorerOptions[next].focus();
