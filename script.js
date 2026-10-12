@@ -304,7 +304,7 @@ document.addEventListener("keydown", (event) => {
   }
   if (event.key === "Tab") {
     const focusable = [...explorer.querySelectorAll('a[href]:not([tabindex="-1"]), button:not([disabled]):not([tabindex="-1"]), [tabindex]:not([tabindex="-1"])')]
-      .filter((element) => !element.hidden && element.getAttribute("aria-hidden") !== "true");
+      .filter((element) => !element.hidden && element.getAttribute("aria-hidden") !== "true" && element.getClientRects().length > 0 && window.getComputedStyle(element).visibility !== "hidden");
     if (!focusable.length) return;
     const first = focusable[0];
     const last = focusable[focusable.length - 1];
