@@ -28,7 +28,7 @@
       <a href="#courses">Курсы</a>
       <a href="#about">О проекте</a>
     </nav>
-    <a class="header-cta" href="#courses">Найти свой курс <span aria-hidden="true">↗</span></a>
+    <a class="header-cta" href="#courses" data-open-selector>Найти свой курс <span aria-hidden="true">↗</span></a>
     <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-nav" aria-label="Открыть меню"><span></span><span></span></button>
   </header>
 
@@ -37,7 +37,7 @@
     <a href="#group">Группы</a>
     <a href="#courses">Курсы</a>
     <a href="#about">О проекте</a>
-    <a class="mobile-cta" href="#courses">Найти свой курс ↗</a>
+    <a class="mobile-cta" href="#courses" data-open-selector>Найти свой курс ↗</a>
   </nav>
 
   <main id="main">
@@ -54,7 +54,7 @@
         </svg>
         <p class="hero-lead">Подготовка — не про бесконечное решение вариантов наугад. Это <span class="marker-highlight">разобраться в теме</span>, потренироваться и понимать, почему ответ именно такой.</p>
         <div class="hero-actions">
-          <a class="button button-primary" href="#courses">Подобрать курс <span aria-hidden="true">↗</span></a>
+          <a class="button button-primary" href="#courses" data-open-selector>Подобрать курс <span aria-hidden="true">↗</span></a>
           <a class="button button-secondary" href="#method">Как устроена подготовка <span aria-hidden="true">↓</span></a>
         </div>
         <div class="hero-footnote"><span class="footnote-mark" aria-hidden="true">↳</span><p>Выберите предмет и экзамен — детали курса можно уточнить перед записью.</p></div>
@@ -195,12 +195,58 @@
     <section class="final-cta page-wrap reveal">
       <span class="cta-label">ТВОЙ СЛЕДУЮЩИЙ ШАГ</span>
       <div class="final-cta-copy"><h2>Пусть в подготовке<br><em>будет система.</em></h2><p>Выберите предмет, откройте направление в Telegram и узнайте, подходит ли вам курс.</p></div>
-      <a class="button button-light" href="#courses">Выбрать курс <span aria-hidden="true">↗</span></a>
+      <a class="button button-light" href="#courses" data-open-selector>Выбрать курс <span aria-hidden="true">↗</span></a>
       <svg class="cta-spark" viewBox="0 0 150 150" aria-hidden="true"><path class="draw-line" pathLength="1" d="M74 5 V145 M5 75 H145 M24 24 L126 126 M126 24 L24 126"/><circle class="draw-line" pathLength="1" cx="75" cy="75" r="45"/></svg>
     </section>
   </main>
 
-  <footer class="site-footer page-wrap">
+  <section class="course-explorer" id="course-explorer" role="dialog" aria-modal="true" aria-labelledby="explorer-title" aria-hidden="true" hidden>
+    <div class="explorer-shell">
+      <header class="explorer-topbar">
+        <a class="explorer-brand" href="#courses"><span class="explorer-brand-mark">Д<span>.</span>Н</span><span>ВЫБОР НАПРАВЛЕНИЯ<small>НАЙДИ СВОЙ ПРЕДМЕТ</small></span></a>
+        <div class="explorer-counter"><span class="explorer-live"></span> ИНТЕРАКТИВНЫЙ КАТАЛОГ</div>
+        <button class="explorer-close" type="button" aria-label="Закрыть выбор направления"><span></span><span></span></button>
+      </header>
+      <div class="explorer-body">
+        <div class="explorer-info" aria-live="polite">
+          <p class="explorer-kicker"><span class="explorer-index">01</span><span id="explorer-category">ЕСТЕСТВЕННЫЕ НАУКИ</span></p>
+          <h2 id="explorer-title">Физика<span class="explorer-period">.</span></h2>
+          <p class="explorer-description" id="explorer-description">Увидеть законы, которые управляют движением, светом и энергией. Не заучивать формулы вслепую — понимать, что за ними стоит.</p>
+          <div class="explorer-tags" id="explorer-tags"><span>ЕГЭ</span><span>ОГЭ</span><span>ГРАФИКИ И ЗАКОНЫ</span></div>
+          <div class="explorer-rule"></div>
+          <p class="explorer-subhead">ВЫБЕРИ СВОЁ НАПРАВЛЕНИЕ</p>
+          <div class="explorer-options" role="group" aria-label="Направления курсов">
+            <button type="button" class="explorer-option is-active" data-subject="physics" aria-pressed="true"><span class="option-number">01</span><span class="option-copy"><strong>Физика</strong><small>Движение · энергия · поля</small></span><span class="option-arrow">↗</span></button>
+            <button type="button" class="explorer-option" data-subject="math" aria-pressed="false"><span class="option-number">02</span><span class="option-copy"><strong>Математика ЕГЭ</strong><small>Функции · геометрия · логика</small></span><span class="option-arrow">↗</span></button>
+            <button type="button" class="explorer-option" data-subject="russian" aria-pressed="false"><span class="option-number">03</span><span class="option-copy"><strong>Русский язык</strong><small>Правила · структура · смысл</small></span><span class="option-arrow">↗</span></button>
+            <button type="button" class="explorer-option" data-subject="oge" aria-pressed="false"><span class="option-number">04</span><span class="option-copy"><strong>Математика ОГЭ</strong><small>База · чертежи · практика</small></span><span class="option-arrow">↗</span></button>
+          </div>
+          <a class="explorer-cta" id="explorer-cta" href="https://t.me/Alfred_physx_bot" target="_blank" rel="noopener noreferrer">Открыть курс в Telegram <span>↗</span></a>
+          <p class="explorer-note">Нажмите на предмет: содержание и визуальная сцена меняются вместе.</p>
+        </div>
+        <div class="explorer-scene scene-physics" id="explorer-scene" aria-label="Анимированная визуализация выбранного предмета">
+          <div class="scene-grid"></div>
+          <div class="scene-label scene-label-top"><span id="scene-overline">PHYSICS / 01</span><span class="scene-live-dot">LIVE STUDY</span></div>
+          <div class="scene-orbit orbit-a"></div><div class="scene-orbit orbit-b"></div>
+          <svg class="scene-art" id="scene-art" viewBox="0 0 600 600" role="img" aria-label="Схема движения и физических законов">
+            <defs><linearGradient id="energy-gradient" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#ff6b5e"/><stop offset="100%" stop-color="#ffe96b"/></linearGradient><filter id="scene-glow"><feGaussianBlur stdDeviation="5" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+            <g class="scene-axis"><path d="M74 470 H535 M110 510 V90"/><path d="M530 464 l12 6 -12 6 M104 95 l6 -12 6 12"/></g>
+            <g class="scene-graph"><path class="scene-draw" pathLength="1" d="M112 420 C175 420 184 370 230 337 S302 255 342 255 S424 177 505 126"/></g>
+            <g class="scene-particles"><circle cx="230" cy="337" r="7"/><circle cx="342" cy="255" r="8"/><circle cx="505" cy="126" r="10"/></g>
+            <g class="scene-formula"><rect x="145" y="130" width="174" height="76" rx="17"/><text x="232" y="178" text-anchor="middle">F = m · a</text></g>
+            <g class="scene-ball"><circle cx="365" cy="375" r="57"/><circle cx="345" cy="355" r="14"/><path d="M325 400 Q365 430 407 392"/></g>
+            <g class="scene-labels"><text x="117" y="495">0</text><text x="505" y="495">t →</text><text x="72" y="111">v</text><text x="377" y="340">m</text></g>
+          </svg>
+          <div class="scene-float-card float-card-a"><span class="float-symbol">↗</span><span><small>КЛЮЧЕВАЯ ИДЕЯ</small><strong id="scene-concept">Сила и движение</strong></span></div>
+          <div class="scene-float-card float-card-b"><span class="float-mini-graph"><i></i><i></i><i></i><i></i><i></i><i></i></span><span><small>ТВОЙ ПРОГРЕСС</small><strong>Понимать → решать</strong></span></div>
+          <div class="scene-footer"><span id="scene-caption">ЗАКОНЫ СТАНОВЯТСЯ ВИДИМЫМИ</span><span class="scene-cross">✳</span></div>
+          <div class="scene-transition" id="scene-transition" aria-hidden="true"></div>
+        </div>
+      </div>
+      <footer class="explorer-bottom"><span>ЕГЭ / ОГЭ · ГРУППОВАЯ ПОДГОТОВКА</span><span>01 — 04 <i>•</i> ВЫБЕРИ СВОЙ МАРШРУТ</span></footer>
+    </div>
+  </section>
+\n  <footer class="site-footer page-wrap">
     <a class="brand" href="#top"><span class="brand-symbol">Д<span>.</span>Н</span><span class="brand-copy">Дарина Ноговицына<small>подготовка к экзаменам</small></span></a>
     <p>Уточняйте актуальные условия обучения в выбранном направлении.</p>
     <a class="footer-link" href="https://www.instagram.com/darinanogovitcyna/" target="_blank" rel="noopener noreferrer">Instagram ↗</a>
