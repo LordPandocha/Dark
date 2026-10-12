@@ -54,7 +54,14 @@ a{color:inherit;text-decoration:none}button{font:inherit}
 .visual-top,.visual-bottom{position:relative;z-index:5;display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:9px;letter-spacing:.12em;font-weight:600;color:#e4e9ff}
 .visual-bottom{font-size:8px;letter-spacing:.1em}.visual-bottom span:last-child{color:var(--yellow);font-size:18px;animation:spin 12s linear infinite}
 .hero-doodle{position:absolute;inset:48px 10px 33px;width:calc(100% - 20px);height:calc(100% - 81px);z-index:0;overflow:visible;opacity:.9}
-.hero-doodle .axis{stroke:rgba(255,255,255,.45);stroke-width:2}.hero-doodle .graph{stroke:#ffe96b;stroke-width:3}.hero-doodle .graph-alt{stroke:#a9b8ff;stroke-width:2.4}.hero-doodle .orbit-dot{stroke:#fff;stroke-width:2;fill:var(--red)}.hero-doodle .red-circle{stroke:#ff8e95;stroke-width:3}\n.js .hero-doodle .draw-line{animation:stroke-write 1.1s calc(520ms + var(--draw-i,0)*120ms) var(--ease) forwards}\n.js .method-card .draw-line,.js .paper-back .draw-line,.js .cta-spark .draw-line{stroke-dashoffset:1}\n.js .method-card.is-visible .draw-line{animation:stroke-write 1s calc(100ms + var(--draw-i,0)*100ms) var(--ease) forwards}\n.method-card:hover .draw-line{animation:stroke-write .8s var(--ease) both}\n.js .group-art.is-visible .paper-back .draw-line{animation:stroke-write 1s calc(180ms + var(--draw-i,0)*100ms) var(--ease) forwards}\n.group-art:hover .paper-back .draw-line{animation:stroke-write .9s var(--ease) both}\n.js .final-cta.is-visible .cta-spark .draw-line{animation:stroke-write 1.2s calc(200ms + var(--draw-i,0)*110ms) var(--ease) forwards}
+.hero-doodle .axis{stroke:rgba(255,255,255,.45);stroke-width:2}.hero-doodle .graph{stroke:#ffe96b;stroke-width:3}.hero-doodle .graph-alt{stroke:#a9b8ff;stroke-width:2.4}.hero-doodle .orbit-dot{stroke:#fff;stroke-width:2;fill:var(--red)}.hero-doodle .red-circle{stroke:#ff8e95;stroke-width:3}
+.js .hero-doodle .draw-line{animation:stroke-write 1.1s calc(520ms + var(--draw-i,0)*120ms) var(--ease) forwards}
+.js .method-card .draw-line,.js .paper-back .draw-line,.js .cta-spark .draw-line{stroke-dashoffset:1}
+.js .method-card.is-visible .draw-line{animation:stroke-write 1s calc(100ms + var(--draw-i,0)*100ms) var(--ease) forwards}
+.method-card:hover .draw-line{animation:stroke-write .8s var(--ease) both}
+.js .group-art.is-visible .paper-back .draw-line{animation:stroke-write 1s calc(180ms + var(--draw-i,0)*100ms) var(--ease) forwards}
+.group-art:hover .paper-back .draw-line{animation:stroke-write .9s var(--ease) both}
+.js .final-cta.is-visible .cta-spark .draw-line{animation:stroke-write 1.2s calc(200ms + var(--draw-i,0)*110ms) var(--ease) forwards}
 .doodle-text{fill:#fff;opacity:0;font:italic 20px var(--serif);stroke:none;animation:text-pop .5s 1.3s ease forwards}.formula{font-size:23px}.exam-label{font-size:32px;font-weight:600;animation-delay:1.6s}
 .visual-sheet{position:absolute;z-index:3;left:12%;top:22%;width:73%;padding:24px 24px 18px;border:1px solid rgba(255,255,255,.7);border-radius:23px;background:var(--paper);color:var(--ink);box-shadow:0 16px 0 rgba(7,14,58,.18),0 25px 40px rgba(4,10,47,.2);transform:rotate(-3deg);animation:sheet-hover 5.8s ease-in-out infinite}
 .sheet-kicker{font-size:9px;font-weight:700;letter-spacing:.14em;color:var(--muted)}
@@ -119,6 +126,9 @@ a{color:inherit;text-decoration:none}button{font:inherit}
 .js .course-card .course-doodle .draw-line{stroke-dashoffset:1}
 .js .course-card.is-visible .course-doodle .draw-line{animation:stroke-write 1.05s calc(var(--draw-delay,0ms) + 180ms) var(--ease) forwards}
 .course-card:hover .course-doodle .draw-line{animation:stroke-write .85s var(--ease) both}
+.js .course-card.is-visible{will-change:opacity,transform}
+.js .course-card.is-visible:not(:hover):not(:focus-visible){will-change:auto}
+@media(prefers-reduced-motion:reduce){.reveal,.course-card,.course-card .course-doodle .draw-line{animation:none!important;transition:none!important;transform:none!important;opacity:1!important}}
 .course-bottom h3{margin:0 0 8px;font:500 25px/1.15 var(--serif);letter-spacing:-.03em}
 .course-bottom p{min-height:61px;margin:0 0 16px;color:var(--muted);font-size:11px;line-height:1.8}
 .course-link{display:flex;align-items:center;justify-content:space-between;gap:8px;padding-top:13px;border-top:1px solid var(--line);font-size:10px;font-weight:700;color:var(--blue)}
@@ -144,7 +154,8 @@ a{color:inherit;text-decoration:none}button{font:inherit}
 .site-footer>p{max-width:310px;margin:0;color:var(--muted);font-size:10px;line-height:1.7}
 .footer-link{padding:10px 14px;border:1px solid #d0d7e8;border-radius:999px;font-size:10px;font-weight:700;transition:transform .2s,color .2s,border-color .2s,background .2s}
 .footer-link:hover{transform:translateY(-2px);color:var(--blue);border-color:var(--blue);background:white}.copyright{font-size:10px;color:var(--muted)}
-.js .reveal{opacity:0;transform:translateY(28px);transition:opacity .68s var(--ease),transform .68s var(--ease);transition-delay:var(--delay,0ms);will-change:opacity,transform}
+.js .reveal{opacity:0;transform:translateY(28px);transition:opacity .68s var(--ease),transform .68s var(--ease);transition-delay:var(--delay,0ms)}
+.js .reveal:not(.is-visible){will-change:opacity,transform}
 .js .reveal.is-visible{opacity:1;transform:translateY(0)}
 @keyframes margin-drop{from{transform:scaleY(0)}to{transform:scaleY(1)}}
 @keyframes dot-pulse{0%,100%{box-shadow:0 0 0 4px rgba(201,68,80,.12)}50%{box-shadow:0 0 0 7px rgba(201,68,80,.035)}}
