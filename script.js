@@ -181,7 +181,7 @@ function renderSubject(key, initial = false) {
     button.classList.toggle("is-active", active);
     button.setAttribute("aria-pressed", String(active));
   });
-  if (initial || !explorerScene.classList.contains("is-changing")) {
+  {
     explorerScene.classList.add("is-changing");
     if (sceneSwapTimer) window.clearTimeout(sceneSwapTimer);
     sceneSwapTimer = window.setTimeout(() => {
@@ -196,6 +196,8 @@ function renderSubject(key, initial = false) {
       }));
       explorerCta.href = data.url;
       explorerScene.className = `explorer-scene ${data.scene}`;
+      sceneArt.classList.add("is-exiting");
+      document.querySelectorAll(".scene-float-card").forEach((card) => card.classList.add("is-exiting"));
       sceneOverline.textContent = data.overline;
       sceneConcept.textContent = data.concept;
       sceneCaption.textContent = data.caption;
@@ -204,7 +206,11 @@ function renderSubject(key, initial = false) {
       // Re-enter with a fresh animation after the wipe has covered the scene.
       void sceneArt.getBoundingClientRect();
       explorerScene.classList.add("is-changing");
-      window.setTimeout(() => explorerScene.classList.remove("is-changing"), reduceMotion ? 0 : 260);
+      window.setTimeout(() => {
+        sceneArt.classList.remove("is-exiting");
+        document.querySelectorAll(".scene-float-card").forEach((card) => card.classList.remove("is-exiting"));
+      }, reduceMotion ? 0 : 240);
+      window.setTimeout(() => explorerScene.classList.remove("is-changing"), reduceMotion ? 0 : 660);
     }, initial ? 0 : 220);
   }
 }
@@ -241,7 +247,7 @@ explorerOptions.forEach((button) => {
       explorerScene.classList.remove("is-changing");
       void sceneArt.getBoundingClientRect();
       explorerScene.classList.add("is-changing");
-      window.setTimeout(() => explorerScene.classList.remove("is-changing"), reduceMotion ? 0 : 260);
+      window.setTimeout(() => explorerScene.classList.remove("is-changing"), reduceMotion ? 0 : 660);
       return;
     }
     renderSubject(button.dataset.subject);
