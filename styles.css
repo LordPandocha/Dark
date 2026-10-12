@@ -378,79 +378,12 @@ a{color:inherit;text-decoration:none}button{font:inherit}
 @keyframes explorer-title-in{from{opacity:0;transform:translateY(25px) rotate(2deg);filter:blur(8px)}to{opacity:1;transform:translateY(0) rotate(0);filter:blur(0)}}
 @keyframes explorer-option-in{from{opacity:0;transform:translateX(-18px) scale(.98)}to{opacity:1;transform:translateX(0) scale(1)}}
 @keyframes explorer-scene-in{from{opacity:0;clip-path:inset(0 0 0 100%);transform:scale(.98)}to{opacity:1;clip-path:inset(0);transform:scale(1)}}
-@media(prefers-reduced-motion:reduce){
- .course-explorer.is-open .explorer-topbar,.course-explorer.is-open .explorer-kicker,.course-explorer.is-open .explorer-info h2,.course-explorer.is-open .explorer-description,.course-explorer.is-open .explorer-tags,.course-explorer.is-open .explorer-subhead,.course-explorer.is-open .explorer-option,.course-explorer.is-open .explorer-cta,.course-explorer.is-open .explorer-scene{animation:none!important}
-}
+
 
 /* Motion is staged only on user interaction; keep the idle scene inexpensive. */
 .scene-formula text{opacity:0}
 .scene-art.is-playing .scene-formula text{animation:formula-text-pop .4s 1.08s cubic-bezier(.16,1,.3,1) both}
 @keyframes formula-text-pop{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
-@media(prefers-reduced-motion:reduce){
-  .explorer-cta{opacity:1!important;visibility:visible!important;pointer-events:auto!important;transform:none!important}
-  .scene-art .scene-draw{stroke-dashoffset:0!important;animation:none!important}
-  .scene-art .scene-particles circle,.scene-art .scene-formula rect,.scene-art .scene-ball circle:first-child{opacity:1!important;transform:none!important;animation:none!important}
-  .scene-art .scene-formula text{opacity:1!important;animation:none!important}
-  .scene-float-card{opacity:1!important;transform:none!important;animation:none!important}
-}
-
-
-/* Responsive/browser compatibility layer: keep the motion, avoid layout overflow. */
-html { -webkit-overflow-scrolling: touch; }
-.course-explorer { overscroll-behavior: contain; }
-.explorer-shell, .explorer-body, .explorer-info, .explorer-scene { min-width: 0; }
-.explorer-description, .option-copy, .scene-footer, .explorer-bottom { overflow-wrap: anywhere; }
-.explorer-topbar { padding-left: max(17px, env(safe-area-inset-left)); padding-right: max(17px, env(safe-area-inset-right)); }
-.course-explorer { padding-bottom: env(safe-area-inset-bottom, 0px); }
-@supports (height: 100dvh) {
-  .course-explorer { min-height: 100dvh; }
-  @media (max-width: 680px) { .explorer-scene { height: min(55dvh, 520px); } }
-}
-@keyframes explorer-title-in {
-  from { opacity: 0; transform: translateY(18px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-@keyframes explorer-scene-in {
-  from { opacity: 0; transform: translateX(14px) scale(.99); }
-  to { opacity: 1; transform: translateX(0) scale(1); }
-}
-@media (hover: none) {
-  .brand:hover .brand-symbol, .header-cta:hover, .explorer-close:hover,
-  .explorer-option:hover, .explorer-cta:hover { transform: none; box-shadow: none; }
-  .desktop-nav a:hover { background-size: 0 2px; }
-}
-@media (max-width: 680px) {
-  .explorer-info { padding-left: max(19px, env(safe-area-inset-left)); padding-right: max(19px, env(safe-area-inset-right)); }
-  .explorer-scene { height: min(55vh, 520px); }
-  .explorer-options { min-width: 0; }
-  .explorer-option { grid-template-columns: 26px minmax(0, 1fr) 29px; gap: 8px; }
-  .explorer-option .option-copy small { overflow-wrap: anywhere; }
-}
-@media (max-width: 360px) {
-  .explorer-brand { gap: 8px; font-size: 8px; letter-spacing: .08em; }
-  .explorer-brand-mark { width: 38px; height: 38px; }
-  .explorer-info { padding-left: 15px; padding-right: 15px; }
-  .explorer-info h2 { font-size: clamp(44px, 13vw, 53px); }
-  .scene-label, .scene-footer { left: 12px; right: 12px; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .course-explorer.is-open .explorer-topbar,
-  .course-explorer.is-open .explorer-kicker,
-  .course-explorer.is-open .explorer-info h2,
-  .course-explorer.is-open .explorer-description,
-  .course-explorer.is-open .explorer-tags,
-  .course-explorer.is-open .explorer-subhead,
-  .course-explorer.is-open .explorer-option,
-  .course-explorer.is-open .explorer-cta,
-  .course-explorer.is-open .explorer-scene { animation: none !important; }
-}
-
-/* Safari/WebKit fallback for translucent navigation surfaces. */
-.site-header, .mobile-nav { -webkit-backdrop-filter: blur(14px); }
-@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-  .site-header, .mobile-nav { background: rgba(251,252,255,.97); }
-}
-
 
 
 
