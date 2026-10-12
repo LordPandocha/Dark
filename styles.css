@@ -772,3 +772,50 @@ body {
 .course-explorer.is-scene-only .explorer-scene.is-changing:after {
   animation: scene-wipe .42s cubic-bezier(.76,0,.24,1) both;
 }
+
+
+/* Keep the course CTA anchored in BOTH the full course selector and subject-only scene. */
+.course-explorer:not(.is-scene-only) .explorer-cta {
+  position: fixed !important;
+  z-index: 260 !important;
+  left: 50% !important;
+  right: auto !important;
+  bottom: max(20px, calc(env(safe-area-inset-bottom) + 14px)) !important;
+  width: min(440px, calc(100vw - 36px)) !important;
+  margin: 0 !important;
+  box-sizing: border-box !important;
+  transform: translate(-50%, 14px) !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  transition: opacity .55s ease, transform .65s cubic-bezier(.2,.8,.2,1), visibility .55s !important;
+  animation: none !important;
+}
+.course-explorer:not(.is-scene-only) .explorer-cta.is-ready {
+  transform: translate(-50%, 0) !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+}
+.course-explorer:not(.is-scene-only) .explorer-info {
+  padding-bottom: 112px !important;
+}
+@media (max-width: 680px) {
+  .course-explorer:not(.is-scene-only) .explorer-cta {
+    left: 16px !important;
+    right: 16px !important;
+    bottom: max(18px, calc(env(safe-area-inset-bottom) + 12px)) !important;
+    width: auto !important;
+    transform: translateY(14px) !important;
+  }
+  .course-explorer:not(.is-scene-only) .explorer-cta.is-ready {
+    transform: translateY(0) !important;
+  }
+  .course-explorer:not(.is-scene-only) .explorer-info {
+    padding-bottom: 118px !important;
+  }
+}
+/* Smoothly reveal the CTA after the scene animation in either selector mode. */
+.course-explorer:not([hidden]) .explorer-cta {
+  will-change: opacity, transform;
+}
