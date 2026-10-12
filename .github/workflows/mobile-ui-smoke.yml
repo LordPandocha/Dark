@@ -99,7 +99,7 @@ jobs:
 
               await page.locator('#course-explorer .explorer-close').click();
               await page.waitForFunction(() => document.querySelector('#course-explorer')?.hidden === true, null, { timeout: 3000 });
-              await page.locator('[data-open-selector]').click();
+              await page.locator('.final-cta [data-open-selector]').click();
               await page.waitForSelector('#course-explorer.is-open:not(.is-scene-only)');
               await page.waitForFunction(() => document.querySelector('#explorer-cta')?.classList.contains('is-ready'), null, { timeout: 6000 });
               const selector = await page.evaluate(() => {
