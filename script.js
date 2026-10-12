@@ -264,8 +264,13 @@ function openExplorer(event) {
   lastExplorerFocus = event && event.currentTarget instanceof HTMLElement ? event.currentTarget : document.activeElement;
   const requestedSubject = event && event.currentTarget && event.currentTarget.dataset.openSubject;
   const hasRequestedSubject = Boolean(requestedSubject && subjectData[requestedSubject]);
+  const isCourseSelector = Boolean(event && event.currentTarget && event.currentTarget.hasAttribute("data-open-selector"));
   explorer.classList.toggle("is-scene-only", hasRequestedSubject);
-  if (hasRequestedSubject) activeSubject = requestedSubject;
+  if (hasRequestedSubject) {
+    activeSubject = requestedSubject;
+  } else if (isCourseSelector) {
+    activeSubject = "physics";
+  }
   explorer.hidden = false;
   explorer.setAttribute("aria-hidden", "false");
   document.body.style.overflow = "hidden";
