@@ -2,26 +2,24 @@ const menuButton = document.querySelector(".menu-toggle");
 const mobileNav = document.querySelector("#mobile-nav");
 
 if (menuButton && mobileNav) {
+  const closeMenu = () => {
+    menuButton.setAttribute("aria-expanded", "false");
+    menuButton.setAttribute("aria-label", "Открыть меню");
+    mobileNav.hidden = true;
+  };
+
   menuButton.addEventListener("click", () => {
-    const isOpen = menuButton.getAttribute("aria-expanded") === "true";
-    menuButton.setAttribute("aria-expanded", String(!isOpen));
-    mobileNav.hidden = isOpen;
-    menuButton.setAttribute("aria-label", isOpen ? "Открыть меню" : "Закрыть меню");
+    const open = menuButton.getAttribute("aria-expanded") === "true";
+    menuButton.setAttribute("aria-expanded", String(!open));
+    menuButton.setAttribute("aria-label", open ? "Открыть меню" : "Закрыть меню");
+    mobileNav.hidden = open;
   });
 
-  mobileNav.querySelectorAll("a").forEach((link) => {
-    link.addEventListener("click", () => {
-      menuButton.setAttribute("aria-expanded", "false");
-      menuButton.setAttribute("aria-label", "Открыть меню");
-      mobileNav.hidden = true;
-    });
-  });
+  mobileNav.querySelectorAll("a").forEach((link) => link.addEventListener("click", closeMenu));
 
   document.addEventListener("keydown", (event) => {
     if (event.key === "Escape" && menuButton.getAttribute("aria-expanded") === "true") {
-      menuButton.setAttribute("aria-expanded", "false");
-      menuButton.setAttribute("aria-label", "Открыть меню");
-      mobileNav.hidden = true;
+      closeMenu();
       menuButton.focus();
     }
   });
@@ -30,46 +28,72 @@ if (menuButton && mobileNav) {
 const year = document.querySelector("#year");
 if (year) year.textContent = String(new Date().getFullYear());
 
-const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-const revealTargets = document.querySelectorAll(
-  ".method-item, .group-visual, .group-copy, .course-card, .why-title, .why-copy, .final-cta, .footer"
-);
+const progress = document.querySelector("#scroll-progress");
+let scrollQueued = false;
+function updateProgress() {
+  if (!progress) return;
+  const root = document.documentElement;
+  const scrollable = root.scrollHeight - root.clientHeight;
+  const amount = scrollable > 0 ? root.scrollTop / scrollable : 0;
+  progress.style.transform = `scaleX(${Math.min(1, Math.max(0, amount))})`;
+  scrollQueued = false;
+}
+window.addEventListener("scroll", () => {
+  if (scrollQueued) return;
+  scrollQueued = true;
+  window.requestAnimationFrame(updateProgress);
+}, { passive: true });
+updateProgress();
 
-revealTargets.forEach((element, index) => {
-  element.setAttribute("data-reveal", "");
-  if (element.classList.contains("course-card")) {
-    element.style.setProperty("--reveal-delay", `${(index % 4) * 80}ms`);
-  } else {
-    element.style.setProperty("--reveal-delay", `${Math.min(index % 3, 2) * 70}ms`);
+// Split the main heading into individually animated characters, while the accessible
+// name stays on the h1 itself.
+let characterIndex = 0;
+document.querySelectorAll("[data-split]").forEach((line) => {
+  const text = line.textContent || "";
+  line.textContent = "";
+  for (const character of text) {
+    const span = document.createElement("i");
+    span.textContent = character === " " ? "\u00a0" : character;
+    span.style.setProperty("--i", String(characterIndex));
+    line.appendChild(span);
+    characterIndex += 1;
   }
 });
 
+// Draw SVG paths in sequence, giving each drawing its own hand-inked rhythm.
+document.querySelectorAll(".hero-doodle .draw-line, .method-icon .draw-line, .paper-back .draw-line, .cta-spark .draw-line").forEach((path, index) => {
+  path.style.setProperty("--draw-i", String(index));
+});
+document.querySelectorAll(".course-card").forEach((card, index) => {
+  card.style.setProperty("--draw-delay", `${index * 90}ms`);
+});
+
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const revealTargets = document.querySelectorAll(".reveal");
 if (reduceMotion || !("IntersectionObserver" in window)) {
   revealTargets.forEach((element) => element.classList.add("is-visible"));
 } else {
-  const revealObserver = new IntersectionObserver((entries, observer) => {
+  const observer = new IntersectionObserver((entries, activeObserver) => {
     entries.forEach((entry) => {
       if (!entry.isIntersecting) return;
       entry.target.classList.add("is-visible");
-      observer.unobserve(entry.target);
+      activeObserver.unobserve(entry.target);
     });
-  }, { threshold: 0.12, rootMargin: "0px 0px -45px 0px" });
+  }, { threshold: 0.12, rootMargin: "0px 0px -35px 0px" });
 
-  revealTargets.forEach((element) => revealObserver.observe(element));
+  revealTargets.forEach((element) => observer.observe(element));
 }
 
-// Move the soft highlight with the pointer on the hero illustration.
-const heroArt = document.querySelector(".hero-art");
-if (heroArt && !reduceMotion && window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
-  heroArt.addEventListener("pointermove", (event) => {
-    const rect = heroArt.getBoundingClientRect();
-    const x = ((event.clientX - rect.left) / rect.width) * 100;
-    const y = ((event.clientY - rect.top) / rect.height) * 100;
-    heroArt.style.setProperty("--spot-x", `${x}%`);
-    heroArt.style.setProperty("--spot-y", `${y}%`);
+// Cursor light follows the pointer only on devices that actually have a mouse.
+const heroVisual = document.querySelector(".hero-visual");
+if (heroVisual && !reduceMotion && window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+  heroVisual.addEventListener("pointermove", (event) => {
+    const rect = heroVisual.getBoundingClientRect();
+    heroVisual.style.setProperty("--spot-x", `${((event.clientX - rect.left) / rect.width) * 100}%`);
+    heroVisual.style.setProperty("--spot-y", `${((event.clientY - rect.top) / rect.height) * 100}%`);
   });
-  heroArt.addEventListener("pointerleave", () => {
-    heroArt.style.setProperty("--spot-x", "50%");
-    heroArt.style.setProperty("--spot-y", "40%");
+  heroVisual.addEventListener("pointerleave", () => {
+    heroVisual.style.setProperty("--spot-x", "52%");
+    heroVisual.style.setProperty("--spot-y", "42%");
   });
 }
