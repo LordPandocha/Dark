@@ -60,6 +60,28 @@ jobs:
               assert.ok(rect.bottom <= height + 1, name + ' clips off bottom: ' + JSON.stringify(rect));
             }
 
+            async function assertArtwork(subject, vp) {
+              await page.waitForFunction(({ sceneClass, href }) => {
+                const scene = document.querySelector('#explorer-scene');
+                const cta = document.querySelector('#explorer-cta');
+                return scene?.classList.contains(sceneClass) && cta?.href === href;
+              }, subject, { timeout: 4000 });
+              const artwork = await page.evaluate(() => {
+                const el = document.querySelector('#scene-art');
+                const r = el.getBoundingClientRect();
+                return {
+                  rect: { left:r.left, right:r.right, top:r.top, bottom:r.bottom, width:r.width, height:r.height },
+                  viewBox: el.getAttribute('viewBox'),
+                  shapeCount: el.querySelectorAll('path,circle,rect,text,ellipse,polygon,line').length,
+                };
+              });
+              assertInViewport(artwork.rect, vp.width, vp.height, vp.name + ' SVG artwork');
+              assert.ok(artwork.rect.width >= vp.width * 0.95, vp.name + ': SVG artwork does not span the viewport: ' + JSON.stringify(artwork.rect));
+              assert.ok(artwork.rect.height >= Math.min(vp.height * 0.4, 420), vp.name + ': SVG artwork collapsed to intrinsic dimensions and may be clipped: ' + JSON.stringify(artwork.rect));
+              assert.equal(artwork.viewBox, '0 0 600 600', vp.name + ': unexpected scene viewBox');
+              assert.ok(artwork.shapeCount >= 10, vp.name + ': subject artwork is missing scene details');
+            }
+
             for (const vp of viewports) {
               await page.setViewportSize({ width: vp.width, height: vp.height });
               await page.goto('http://127.0.0.1:4173/', { waitUntil: 'domcontentloaded' });
@@ -95,6 +117,7 @@ jobs:
               assert.ok(physics.rootWidth <= vp.width + 1, vp.name + ': document has horizontal overflow: ' + JSON.stringify(physics));
               assert.ok(physics.scene.left <= 1 && physics.scene.right >= vp.width - 1, vp.name + ': scene does not span viewport: ' + JSON.stringify(physics.scene));
               assert.ok(physics.scene.top <= 1 && physics.scene.bottom >= vp.height - 1, vp.name + ': scene does not fill viewport: ' + JSON.stringify(physics.scene));
+              await assertArtwork({ sceneClass:'scene-physics', href:'https://t.me/Alfred_physx_bot' }, vp);
               assertInViewport(physics.cta, vp.width, vp.height, vp.name + ' physics CTA');
               assertInViewport(physics.menu, vp.width, vp.height, vp.name + ' subject menu');
               await page.screenshot({ path: 'artifacts/' + vp.name + '-physics.png' });
@@ -105,9 +128,32 @@ jobs:
               await page.waitForTimeout(700);
               const mathHref = await page.locator('#explorer-cta').evaluate(el => el.href);
               assert.equal(mathHref, 'https://t.me/PF_Math_bot', vp.name + ': math CTA URL mismatch');
+              await assertArtwork({ sceneClass:'scene-math', href:'https://t.me/PF_Math_bot' }, vp);
+
+              for (const subject of [
+                { key:'russian', sceneClass:'scene-russian', href:'https://t.me/Gog_ya_bot' },
+                { key:'oge', sceneClass:'scene-oge', href:'https://t.me/M_OGE_bot' },
+              ]) {
+                await page.locator(`.explorer-options [data-subject="${subject.key}"]`).click();
+                await assertArtwork(subject, vp);
+              }
 
               await page.locator('#course-explorer .explorer-close').click();
               await page.waitForFunction(() => document.querySelector('#course-explorer')?.hidden === true, null, { timeout: 3000 });
+
+              // Also verify the direct course cards open the same correctly sized full-screen scene.
+              for (const subject of [
+                { key:'math', sceneClass:'scene-math', href:'https://t.me/PF_Math_bot' },
+                { key:'russian', sceneClass:'scene-russian', href:'https://t.me/Gog_ya_bot' },
+                { key:'oge', sceneClass:'scene-oge', href:'https://t.me/M_OGE_bot' },
+              ]) {
+                await page.locator(`[data-open-subject="${subject.key}"]`).click();
+                await page.waitForSelector('#course-explorer.is-open.is-scene-only');
+                await assertArtwork(subject, vp);
+                await page.locator('#course-explorer .explorer-close').click();
+                await page.waitForFunction(() => document.querySelector('#course-explorer')?.hidden === true, null, { timeout: 3000 });
+              }
+
               await page.locator('.final-cta [data-open-selector]').click();
               await page.waitForSelector('#course-explorer.is-open:not(.is-scene-only)');
               await page.waitForFunction(() => document.querySelector('#explorer-cta')?.classList.contains('is-ready'), null, { timeout: 6000 });
@@ -129,6 +175,25 @@ jobs:
               assert.ok(selector.rootWidth <= vp.width + 1, vp.name + ': selector introduces horizontal overflow: ' + JSON.stringify(selector));
               assertInViewport(selector.rect, vp.width, vp.height, vp.name + ' selector CTA');
               await page.screenshot({ path: 'artifacts/' + vp.name + '-course-selector.png' });
+
+              if (vp.name === 'small-mobile') {
+                await page.locator('#course-explorer .explorer-close').click();
+                await page.waitForFunction(() => document.querySelector('#course-explorer')?.hidden === true, null, { timeout: 3000 });
+                await page.emulateMedia({ reducedMotion:'reduce' });
+                await page.locator('[data-open-subject="physics"]').click();
+                await page.waitForSelector('#course-explorer.is-open.is-scene-only');
+                await page.waitForFunction(() => document.querySelector('#explorer-cta')?.classList.contains('is-ready'), null, { timeout: 2000 });
+                const motion = await page.evaluate(() => ({
+                  svg:getComputedStyle(document.querySelector('#scene-art')).animationName,
+                  orbit:getComputedStyle(document.querySelector('.scene-orbit')).animationName,
+                }));
+                assert.equal(motion.svg, 'none', 'reduced motion: SVG entrance animation still runs');
+                assert.equal(motion.orbit, 'none', 'reduced motion: ambient orbit animation still runs');
+                await page.locator('#course-explorer .explorer-close').click();
+                await page.waitForFunction(() => document.querySelector('#course-explorer')?.hidden === true, null, { timeout: 3000 });
+                await page.emulateMedia({ reducedMotion:'no-preference' });
+              }
+
               console.log('PASS ' + vp.name + ': scene=' + Math.round(physics.scene.width) + 'x' + Math.round(physics.scene.height) +
                 ', CTA=' + Math.round(physics.cta.width) + 'px, selector CTA=' + Math.round(selector.rect.width) + 'px');
             }
