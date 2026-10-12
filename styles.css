@@ -381,3 +381,15 @@ a{color:inherit;text-decoration:none}button{font:inherit}
 @media(prefers-reduced-motion:reduce){
  .course-explorer.is-open .explorer-topbar,.course-explorer.is-open .explorer-kicker,.course-explorer.is-open .explorer-info h2,.course-explorer.is-open .explorer-description,.course-explorer.is-open .explorer-tags,.course-explorer.is-open .explorer-subhead,.course-explorer.is-open .explorer-option,.course-explorer.is-open .explorer-cta,.course-explorer.is-open .explorer-scene{animation:none!important}
 }
+
+/* Motion is staged only on user interaction; keep the idle scene inexpensive. */
+.scene-formula text{opacity:0}
+.scene-art.is-playing .scene-formula text{animation:formula-text-pop .4s 1.08s cubic-bezier(.16,1,.3,1) both}
+@keyframes formula-text-pop{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+@media(prefers-reduced-motion:reduce){
+  .explorer-cta{opacity:1!important;visibility:visible!important;pointer-events:auto!important;transform:none!important}
+  .scene-art .scene-draw{stroke-dashoffset:0!important;animation:none!important}
+  .scene-art .scene-particles circle,.scene-art .scene-formula rect,.scene-art .scene-ball circle:first-child{opacity:1!important;transform:none!important;animation:none!important}
+  .scene-art .scene-formula text{opacity:1!important;animation:none!important}
+  .scene-float-card{opacity:1!important;transform:none!important;animation:none!important}
+}
