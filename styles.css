@@ -740,12 +740,14 @@ body {
     transform:translateX(-50%) !important;
     bottom:92px !important;
   }
-  .course-explorer.is-scene-only .explorer-cta {
+  /* Match the higher-specificity ready state so width cannot fall back to auto. */
+  .course-explorer.is-scene-only .explorer-cta,
+  .course-explorer.is-scene-only .explorer-cta.is-ready {
     left:50% !important;
     right:auto !important;
     width:min(440px, calc(100% - 40px)) !important;
-    transform:translate(-50%,14px) !important;
   }
+  .course-explorer.is-scene-only .explorer-cta { transform:translate(-50%,14px) !important; }
   .course-explorer.is-scene-only .explorer-cta.is-ready { transform:translate(-50%,0) !important; }
   .course-explorer.is-scene-only .scene-art { inset:10% 4% 20% !important; }
 }
