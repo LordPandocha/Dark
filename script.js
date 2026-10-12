@@ -263,7 +263,9 @@ function openExplorer(event) {
   if (event) event.preventDefault();
   lastExplorerFocus = event && event.currentTarget instanceof HTMLElement ? event.currentTarget : document.activeElement;
   const requestedSubject = event && event.currentTarget && event.currentTarget.dataset.openSubject;
-  if (requestedSubject && subjectData[requestedSubject]) activeSubject = requestedSubject;
+  const hasRequestedSubject = Boolean(requestedSubject && subjectData[requestedSubject]);
+  explorer.classList.toggle("is-scene-only", hasRequestedSubject);
+  if (hasRequestedSubject) activeSubject = requestedSubject;
   explorer.hidden = false;
   explorer.setAttribute("aria-hidden", "false");
   document.body.style.overflow = "hidden";
