@@ -140,6 +140,7 @@ let lastExplorerFocus = null;
 let activeSubject = "physics";
 let sceneSwapTimer = null;
 let sceneReadyTimer = null;
+let explorerCloseTimer = null;
 let sceneCleanupTimers = [];
 
 function clearSceneTimers() {
@@ -257,6 +258,7 @@ function renderSubject(key, initial = false) {
 
 function openExplorer(event) {
   if (!explorer) return;
+  if (explorerCloseTimer !== null) { window.clearTimeout(explorerCloseTimer); explorerCloseTimer = null; }
   if (event) event.preventDefault();
   lastExplorerFocus = event && event.currentTarget instanceof HTMLElement ? event.currentTarget : document.activeElement;
   const requestedSubject = event && event.currentTarget && event.currentTarget.dataset.openSubject;
@@ -272,10 +274,13 @@ function openExplorer(event) {
 }
 function closeExplorer() {
   if (!explorer || explorer.hidden) return;
+  clearSceneTimers();
+  explorerCta.classList.remove("is-ready");
   explorer.classList.remove("is-open");
   explorer.setAttribute("aria-hidden", "true");
   document.body.style.overflow = "";
-  window.setTimeout(() => { explorer.hidden = true; }, reduceMotion ? 0 : 360);
+  if (explorerCloseTimer !== null) window.clearTimeout(explorerCloseTimer);
+  explorerCloseTimer = window.setTimeout(() => { explorer.hidden = true; explorerCloseTimer = null; }, reduceMotion ? 0 : 360);
   if (lastExplorerFocus && typeof lastExplorerFocus.focus === "function") lastExplorerFocus.focus();
 }
 document.querySelectorAll("[data-open-selector], [data-open-subject]").forEach((link) => link.addEventListener("click", openExplorer));
