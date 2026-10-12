@@ -444,3 +444,9 @@ html { -webkit-overflow-scrolling: touch; }
   .course-explorer.is-open .explorer-cta,
   .course-explorer.is-open .explorer-scene { animation: none !important; }
 }
+
+/* Safari/WebKit fallback for translucent navigation surfaces. */
+.site-header, .mobile-nav { -webkit-backdrop-filter: blur(14px); }
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .site-header, .mobile-nav { background: rgba(251,252,255,.97); }
+}
