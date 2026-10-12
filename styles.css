@@ -719,6 +719,12 @@ body {
 
 @media (max-width:680px) {
   html, body { max-width:100%; overflow-x:hidden !important; }
+  /* Keep the preview short enough that the heading and tags clear the fixed CTA on phones. */
+  .course-explorer:not(.is-scene-only) .explorer-scene {
+    height:min(38vh, 440px) !important;
+    min-height:290px !important;
+    max-height:440px !important;
+  }
   .course-explorer:not(.is-scene-only) .explorer-cta {
     left:16px !important;
     right:16px !important;
