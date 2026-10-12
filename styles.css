@@ -760,3 +760,15 @@ body {
   .course-explorer.is-scene-only .explorer-options,
   .course-explorer.is-scene-only .explorer-option { animation: none !important; }
 }
+
+
+/* A short upward hand-off between subjects, instead of an abrupt SVG swap. */
+.course-explorer.is-scene-only .scene-art.is-exiting {
+  animation: scene-art-out .22s cubic-bezier(.4,0,1,1) both !important;
+}
+.course-explorer.is-scene-only .scene-float-card.is-exiting {
+  animation: scene-card-out .18s ease-in both !important;
+}
+.course-explorer.is-scene-only .explorer-scene.is-changing:after {
+  animation: scene-wipe .42s cubic-bezier(.76,0,.24,1) both;
+}
