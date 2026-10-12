@@ -82,9 +82,12 @@ jobs:
                   rootWidth:document.documentElement.scrollWidth,
                   ctaVisible:getComputedStyle(document.querySelector('#explorer-cta')).visibility,
                   ctaFont:getComputedStyle(document.querySelector('#explorer-cta')).fontSize,
+                  ctaOpacity:Number(getComputedStyle(document.querySelector('#explorer-cta')).opacity),
                 };
               });
               assert.equal(physics.ctaVisible, 'visible', vp.name + ': Telegram CTA hidden');
+              assert.ok(physics.ctaOpacity > 0.98, vp.name + ': Telegram CTA has not finished fading in: ' + physics.ctaOpacity);
+              assert.ok(parseFloat(physics.ctaFont) >= 15, vp.name + ': Telegram CTA font is too small: ' + physics.ctaFont);
               assert.ok(physics.rootWidth <= vp.width + 1, vp.name + ': document has horizontal overflow: ' + JSON.stringify(physics));
               assert.ok(physics.scene.left <= 1 && physics.scene.right >= vp.width - 1, vp.name + ': scene does not span viewport: ' + JSON.stringify(physics.scene));
               assert.ok(physics.scene.top <= 1 && physics.scene.bottom >= vp.height - 1, vp.name + ': scene does not fill viewport: ' + JSON.stringify(physics.scene));
@@ -112,9 +115,13 @@ jobs:
                   rect:{left:r.left,right:r.right,top:r.top,bottom:r.bottom,width:r.width,height:r.height},
                   width:innerWidth,height:innerHeight,rootWidth:document.documentElement.scrollWidth,
                   visible:getComputedStyle(el).visibility,
+                  opacity:Number(getComputedStyle(el).opacity),
+                  tagsBottom:document.querySelector('#explorer-tags').getBoundingClientRect().bottom,
                 };
               });
               assert.equal(selector.visible, 'visible', vp.name + ': selector CTA hidden');
+              assert.ok(selector.opacity > 0.98, vp.name + ': selector CTA has not finished fading in: ' + selector.opacity);
+              if (vp.width <= 680) assert.ok(selector.tagsBottom <= selector.rect.top - 4, vp.name + ': selector CTA overlaps the tags: ' + JSON.stringify(selector));
               assert.ok(selector.rootWidth <= vp.width + 1, vp.name + ': selector introduces horizontal overflow: ' + JSON.stringify(selector));
               assertInViewport(selector.rect, vp.width, vp.height, vp.name + ' selector CTA');
               await page.screenshot({ path: 'artifacts/' + vp.name + '-course-selector.png' });
