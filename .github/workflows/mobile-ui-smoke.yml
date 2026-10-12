@@ -80,6 +80,10 @@ jobs:
                   cta:rect(document.querySelector('#explorer-cta')),
                   menu:rect(document.querySelector('.explorer-options')),
                   rootWidth:document.documentElement.scrollWidth,
+                  overflowCandidates:[...document.querySelectorAll('body *')].map(el => {
+                    const r=el.getBoundingClientRect(), s=getComputedStyle(el);
+                    return {tag:el.tagName.toLowerCase(),id:el.id,cls:typeof el.className==='string'?el.className:'svg',left:Math.round(r.left),right:Math.round(r.right),top:Math.round(r.top),bottom:Math.round(r.bottom),position:s.position,overflowX:s.overflowX,display:s.display,visibility:s.visibility,opacity:s.opacity};
+                  }).filter(x => x.display!=='none' && x.visibility!=='hidden' && Number(x.opacity)>.05 && x.right>innerWidth+1).sort((a,b)=>b.right-a.right).slice(0,12),
                   ctaVisible:getComputedStyle(document.querySelector('#explorer-cta')).visibility,
                   ctaFont:getComputedStyle(document.querySelector('#explorer-cta')).fontSize,
                   ctaOpacity:Number(getComputedStyle(document.querySelector('#explorer-cta')).opacity),
