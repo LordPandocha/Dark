@@ -312,8 +312,8 @@ a{color:inherit;text-decoration:none}button{font:inherit}
 .scene-cross{color:var(--scene-accent);font-size:29px;animation:spin 16s linear infinite}
 .scene-transition{position:absolute;z-index:8;inset:0;pointer-events:none;background:var(--scene-accent);clip-path:inset(0 100% 0 0);opacity:.92}
 .explorer-scene.is-changing .scene-transition{animation:scene-wipe .65s cubic-bezier(.76,0,.24,1) both}
-.explorer-scene.is-changing .scene-art{animation:scene-art-out .24s ease both}
-.explorer-scene.is-changing .scene-float-card{animation:scene-card-out .22s ease both}
+.scene-art.is-exiting{animation:scene-art-out .24s ease both}
+.scene-float-card.is-exiting{animation:scene-card-out .22s ease both}
 .explorer-bottom{display:flex;justify-content:space-between;gap:15px;padding:16px clamp(20px,4vw,58px);border-top:1px solid #dce1ed;background:#f9faff;color:#858ba1;font-size:8px;font-weight:800;letter-spacing:.13em}
 .explorer-bottom i{padding:0 6px;color:#e14d55;font-style:normal}
 @keyframes scene-breathe{0%,100%{transform:scale(.92);opacity:.65}50%{transform:scale(1.08);opacity:1}}
