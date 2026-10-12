@@ -937,3 +937,165 @@ body {
     font-size: 22px !important;
   }
 }
+
+
+/*
+ * Definitive mobile layout: fixed descendants were being positioned against the
+ * animated .explorer-shell instead of the viewport. Remove that containing block.
+ */
+@media (max-width: 680px) {
+  .course-explorer.is-scene-only {
+    position: fixed !important;
+    inset: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    height: 100dvh !important;
+    max-width: 100vw !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: hidden !important;
+    transform: none !important;
+    clip-path: none !important;
+  }
+  .course-explorer.is-scene-only .explorer-shell,
+  .course-explorer.is-open.is-scene-only .explorer-shell {
+    position: fixed !important;
+    inset: 0 !important;
+    width: 100vw !important;
+    min-width: 100vw !important;
+    max-width: 100vw !important;
+    height: 100vh !important;
+    height: 100dvh !important;
+    min-height: 100vh !important;
+    min-height: 100dvh !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    display: block !important;
+    transform: none !important;
+    animation: none !important;
+    border-radius: 0 !important;
+    box-sizing: border-box !important;
+  }
+  .course-explorer.is-scene-only .explorer-body {
+    position: absolute !important;
+    inset: 0 !important;
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+  }
+  .course-explorer.is-scene-only .explorer-scene {
+    position: absolute !important;
+    inset: 0 !important;
+    display: block !important;
+    width: 100% !important;
+    min-width: 100% !important;
+    max-width: 100% !important;
+    height: 100% !important;
+    min-height: 100% !important;
+    max-height: none !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+    overflow: hidden !important;
+    transform: none !important;
+    clip-path: none !important;
+    animation: none !important;
+  }
+  .course-explorer.is-scene-only .scene-grid,
+  .course-explorer.is-scene-only .explorer-scene:before,
+  .course-explorer.is-scene-only .explorer-scene:after {
+    width: auto;
+    max-width: none;
+  }
+  .course-explorer.is-scene-only .scene-art {
+    position: absolute !important;
+    inset: 13% 0 27% !important;
+    display: block !important;
+    width: 100% !important;
+    height: 60% !important;
+    max-width: none !important;
+    max-height: none !important;
+    margin: 0 !important;
+    overflow: visible !important;
+    transform-origin: center center !important;
+  }
+  .course-explorer.is-scene-only .scene-float-card {
+    max-width: min(250px, 57vw) !important;
+    padding: 10px 11px !important;
+    gap: 8px !important;
+  }
+  .course-explorer.is-scene-only .scene-float-card strong {
+    font-size: 12px !important;
+    line-height: 1.25 !important;
+  }
+  .course-explorer.is-scene-only .scene-float-card small {
+    font-size: 9px !important;
+    line-height: 1.3 !important;
+  }
+  .course-explorer.is-scene-only .scene-label {
+    top: max(20px, env(safe-area-inset-top)) !important;
+    left: 16px !important;
+    right: 76px !important;
+    font-size: 11px !important;
+  }
+  .course-explorer.is-scene-only .explorer-close {
+    top: max(14px, env(safe-area-inset-top)) !important;
+    right: max(14px, env(safe-area-inset-right)) !important;
+    width: 44px !important;
+    height: 44px !important;
+  }
+  .course-explorer.is-scene-only .scene-footer {
+    left: 16px !important;
+    right: 16px !important;
+    bottom: max(162px, calc(env(safe-area-inset-bottom) + 154px)) !important;
+    font-size: 10px !important;
+    letter-spacing: .08em !important;
+  }
+  .course-explorer.is-scene-only .explorer-options {
+    position: fixed !important;
+    left: 12px !important;
+    right: 12px !important;
+    bottom: max(91px, calc(env(safe-area-inset-bottom) + 84px)) !important;
+    width: auto !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    max-height: 58px !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    flex-wrap: nowrap !important;
+    box-sizing: border-box !important;
+  }
+  .course-explorer.is-scene-only .explorer-cta,
+  .course-explorer.is-scene-only .explorer-cta.is-ready {
+    position: fixed !important;
+    left: 12px !important;
+    right: 12px !important;
+    bottom: max(16px, calc(env(safe-area-inset-bottom) + 10px)) !important;
+    width: auto !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    min-height: 64px !important;
+    margin: 0 !important;
+    padding: 16px 19px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 12px !important;
+    box-sizing: border-box !important;
+    border-radius: 20px !important;
+    font-size: clamp(15px, 4.1vw, 18px) !important;
+    font-weight: 800 !important;
+    line-height: 1.25 !important;
+    letter-spacing: 0 !important;
+    text-align: left !important;
+    white-space: normal !important;
+    transform: translateY(14px) !important;
+  }
+  .course-explorer.is-scene-only .explorer-cta.is-ready {
+    transform: translateY(0) !important;
+  }
+}
