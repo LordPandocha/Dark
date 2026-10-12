@@ -221,6 +221,7 @@ function renderSubject(key, initial = false) {
   });
   {
     explorerScene.classList.add("is-changing");
+    if (!initial) sceneArt.classList.add("is-exiting");
     sceneSwapTimer = window.setTimeout(() => {
       sceneSwapTimer = null;
       explorerTitle.replaceChildren(document.createTextNode(data.title), Object.assign(document.createElement("span"), { className: "explorer-period", textContent: "." }));
@@ -234,7 +235,6 @@ function renderSubject(key, initial = false) {
       }));
       explorerCta.href = data.url;
       explorerScene.className = `explorer-scene ${data.scene}`;
-      sceneArt.classList.add("is-exiting");
       document.querySelectorAll(".scene-float-card").forEach((card) => card.classList.add("is-exiting"));
       sceneOverline.textContent = data.overline;
       sceneConcept.textContent = data.concept;
