@@ -570,3 +570,42 @@ body {
     width: min(360px, calc(100% - 40px));
   }
 }
+
+
+/* Fix: keep the Telegram CTA centered and pinned to the viewport in subject scenes.
+   The generic entrance animation overrides translateX(-50%), pushing the CTA off-screen. */
+.course-explorer.is-scene-only .explorer-cta,
+.course-explorer.is-scene-only .explorer-cta.is-ready {
+  animation: none !important;
+  left: 50%;
+  right: auto;
+  position: fixed;
+  z-index: 250;
+  transform: translateX(-50%);
+  box-sizing: border-box;
+}
+.course-explorer.is-scene-only .explorer-cta:not(.is-ready) {
+  transform: translate(-50%, 14px);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+.course-explorer.is-scene-only .explorer-cta.is-ready {
+  transform: translate(-50%, 0);
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+@media (max-width: 680px) {
+  .course-explorer.is-scene-only .explorer-cta,
+  .course-explorer.is-scene-only .explorer-cta.is-ready {
+    left: 20px;
+    right: 20px;
+    width: auto;
+    bottom: max(24px, calc(env(safe-area-inset-bottom) + 16px));
+    transform: translateY(14px);
+  }
+  .course-explorer.is-scene-only .explorer-cta.is-ready {
+    transform: translateY(0);
+  }
+}
