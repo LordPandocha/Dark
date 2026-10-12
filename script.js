@@ -139,9 +139,11 @@ const explorerOptions = [...document.querySelectorAll(".explorer-option")];
 let lastExplorerFocus = null;
 let activeSubject = "physics";
 let sceneSwapTimer = null;
+let sceneReadyTimer = null;
 let sceneCleanupTimers = [];
 
 function clearSceneTimers() {
+  if (sceneReadyTimer !== null) { window.clearTimeout(sceneReadyTimer); sceneReadyTimer = null; }
   if (sceneSwapTimer !== null) {
     window.clearTimeout(sceneSwapTimer);
     sceneSwapTimer = null;
@@ -207,6 +209,9 @@ function renderSubject(key, initial = false) {
   if (!data || !explorer) return;
   clearSceneTimers();
   activeSubject = key;
+  explorerCta.classList.remove("is-ready");
+  sceneArt.classList.remove("is-playing");
+  document.querySelectorAll(".scene-float-card").forEach((card) => { card.classList.remove("is-exiting"); card.style.animation = "none"; });
   explorerOptions.forEach((button) => {
     const active = button.dataset.subject === key;
     button.classList.toggle("is-active", active);
@@ -233,17 +238,19 @@ function renderSubject(key, initial = false) {
       sceneConcept.textContent = data.concept;
       sceneCaption.textContent = data.caption;
       sceneArt.setAttribute("aria-label", `Анимированная визуализация: ${data.title}`);
-      sceneArt.innerHTML = `<defs><filter id="scene-glow"><feGaussianBlur stdDeviation="5" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>${data.svg}`;
-      // New SVG nodes get a fresh draw animation without forcing a synchronous layout.
+      sceneArt.innerHTML = data.svg;
+      sceneArt.classList.remove("is-exiting");
+      sceneArt.classList.add("is-playing");
+      document.querySelectorAll(".scene-float-card").forEach((card) => { card.classList.remove("is-exiting"); card.style.animation = ""; });
       explorerScene.classList.add("is-changing");
       sceneCleanupTimers.push(window.setTimeout(() => {
-        if (activeSubject !== key) return;
-        sceneArt.classList.remove("is-exiting");
-        document.querySelectorAll(".scene-float-card").forEach((card) => card.classList.remove("is-exiting"));
-      }, reduceMotion ? 0 : 240));
-      sceneCleanupTimers.push(window.setTimeout(() => {
         if (activeSubject === key) explorerScene.classList.remove("is-changing");
-      }, reduceMotion ? 0 : 660));
+      }, reduceMotion ? 0 : 440));
+      sceneReadyTimer = window.setTimeout(() => {
+        if (activeSubject !== key || explorer.hidden) return;
+        explorerCta.classList.add("is-ready");
+        sceneReadyTimer = null;
+      }, reduceMotion ? 0 : 1750);
     }, initial ? 0 : 220);
   }
 }
@@ -252,6 +259,8 @@ function openExplorer(event) {
   if (!explorer) return;
   if (event) event.preventDefault();
   lastExplorerFocus = event && event.currentTarget instanceof HTMLElement ? event.currentTarget : document.activeElement;
+  const requestedSubject = event && event.currentTarget && event.currentTarget.dataset.openSubject;
+  if (requestedSubject && subjectData[requestedSubject]) activeSubject = requestedSubject;
   explorer.hidden = false;
   explorer.setAttribute("aria-hidden", "false");
   document.body.style.overflow = "hidden";
@@ -269,7 +278,7 @@ function closeExplorer() {
   window.setTimeout(() => { explorer.hidden = true; }, reduceMotion ? 0 : 360);
   if (lastExplorerFocus && typeof lastExplorerFocus.focus === "function") lastExplorerFocus.focus();
 }
-document.querySelectorAll("[data-open-selector]").forEach((link) => link.addEventListener("click", openExplorer));
+document.querySelectorAll("[data-open-selector], [data-open-subject]").forEach((link) => link.addEventListener("click", openExplorer));
 explorerClose?.addEventListener("click", closeExplorer);
 explorer?.addEventListener("click", (event) => {
   if (event.target === explorer) closeExplorer();
