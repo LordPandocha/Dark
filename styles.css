@@ -819,3 +819,121 @@ body {
 .course-explorer:not([hidden]) .explorer-cta {
   will-change: opacity, transform;
 }
+
+
+/* Mobile hotfix: scene must occupy the entire viewport, with no sideways overflow. */
+@media (max-width: 680px) {
+  html, body { max-width: 100%; overflow-x: hidden !important; }
+  .course-explorer.is-scene-only,
+  .course-explorer.is-scene-only .explorer-shell,
+  .course-explorer.is-scene-only .explorer-body,
+  .course-explorer.is-scene-only .explorer-scene {
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+  }
+  .course-explorer.is-scene-only {
+    inset: 0 !important;
+    overflow: hidden !important;
+    overscroll-behavior: none !important;
+  }
+  .course-explorer.is-scene-only .explorer-shell {
+    overflow: hidden !important;
+    transform: none !important;
+  }
+  .course-explorer.is-scene-only .explorer-body {
+    overflow: hidden !important;
+    display: block !important;
+  }
+  .course-explorer.is-scene-only .explorer-scene {
+    position: absolute !important;
+    inset: 0 !important;
+    height: 100% !important;
+    min-height: 100% !important;
+    max-height: none !important;
+    border-radius: 0 !important;
+    clip-path: none !important;
+    transform: none !important;
+    animation: none !important;
+  }
+  .course-explorer.is-scene-only .scene-art {
+    inset: 15% 0 25% !important;
+    width: 100% !important;
+    height: 60% !important;
+    max-width: none !important;
+    max-height: 70dvh !important;
+    overflow: visible !important;
+  }
+  .course-explorer.is-scene-only .scene-float-card {
+    max-width: min(230px, 54vw) !important;
+    padding: 9px 10px !important;
+    font-size: 12px !important;
+  }
+  .course-explorer.is-scene-only .scene-float-card strong {
+    font-size: 12px !important;
+    line-height: 1.25 !important;
+  }
+  .course-explorer.is-scene-only .scene-float-card small {
+    font-size: 9px !important;
+    line-height: 1.25 !important;
+  }
+  .course-explorer.is-scene-only .scene-label {
+    left: 18px !important;
+    right: 76px !important;
+    font-size: 12px !important;
+  }
+  .course-explorer.is-scene-only .scene-live-dot { font-size: 10px !important; }
+  .course-explorer.is-scene-only .scene-footer {
+    left: 18px !important;
+    right: 18px !important;
+    bottom: max(166px, calc(env(safe-area-inset-bottom) + 158px)) !important;
+    font-size: 10px !important;
+    overflow: hidden !important;
+  }
+  .course-explorer.is-scene-only .explorer-options {
+    left: 12px !important;
+    right: 12px !important;
+    bottom: max(94px, calc(env(safe-area-inset-bottom) + 88px)) !important;
+    width: auto !important;
+    max-width: none !important;
+    padding: 7px !important;
+    gap: 6px !important;
+    border-radius: 17px !important;
+  }
+  .course-explorer.is-scene-only .explorer-option {
+    min-height: 44px !important;
+    padding: 0 12px !important;
+    border-radius: 12px !important;
+  }
+  .course-explorer.is-scene-only .explorer-option .option-copy strong {
+    font-size: 12px !important;
+  }
+  .course-explorer.is-scene-only .explorer-cta,
+  .course-explorer.is-scene-only .explorer-cta.is-ready {
+    left: 12px !important;
+    right: 12px !important;
+    bottom: max(18px, calc(env(safe-area-inset-bottom) + 12px)) !important;
+    width: auto !important;
+    max-width: none !important;
+    min-height: 64px !important;
+    padding: 18px 20px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 12px !important;
+    font-size: clamp(15px, 4vw, 18px) !important;
+    line-height: 1.25 !important;
+    white-space: normal !important;
+    text-align: left !important;
+    border-radius: 22px !important;
+    box-sizing: border-box !important;
+  }
+  .course-explorer.is-scene-only .explorer-cta span {
+    flex: 0 0 auto !important;
+    font-size: 22px !important;
+  }
+}
