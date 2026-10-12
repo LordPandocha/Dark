@@ -3,139 +3,166 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#f4f0e8">
-  <meta name="description" content="Подготовка к экзаменам в группе: понятный план, регулярная практика и поддержка на пути к результату.">
-  <title>Дарина Ноговицына — подготовка к экзаменам в группе</title>
+  <meta name="theme-color" content="#f8f8f6">
+  <meta name="description" content="Групповые курсы подготовки к ЕГЭ и ОГЭ: физика, математика и русский язык. Выберите направление и узнайте условия обучения.">
+  <title>Дарина Ноговицына — курсы подготовки к ЕГЭ и ОГЭ</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Onest:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <script src="script.js" defer></script>
 </head>
 <body>
-  <a class="skip-link" href="#main">Перейти к содержанию</a>
-  <header class="site-header">
-    <a class="wordmark" href="#top" aria-label="Дарина Ноговицына — на главную">ДН<span>.</span></a>
-    <nav class="desktop-nav" aria-label="Основная навигация">
-      <a href="#approach">Подход</a>
-      <a href="#group">Обучение в группе</a>
-      <a href="#courses">Направления</a>
-      <a href="#about">О Дарине</a>
+  <a class="skip-link" href="#main">К содержанию</a>
+  <header class="header" id="top">
+    <a class="brand" href="#top" aria-label="Дарина Ноговицына — главная"><span class="brand-mark">ДН</span><span class="brand-name">Дарина Ноговицына<small>подготовка к экзаменам</small></span></a>
+    <nav class="nav" aria-label="Основная навигация">
+      <a href="#method">Как учимся</a>
+      <a href="#courses">Курсы</a>
+      <a href="#about">О проекте</a>
     </nav>
-    <a class="header-cta" href="#courses">Выбрать направление <span aria-hidden="true">↗</span></a>
-    <button class="menu-toggle" aria-label="Открыть меню" aria-expanded="false" aria-controls="mobile-nav"><span></span><span></span></button>
+    <a class="header-cta" href="#courses">Выбрать курс <span aria-hidden="true">↗</span></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-nav" aria-label="Открыть меню"><span></span><span></span></button>
   </header>
 
-  <nav id="mobile-nav" class="mobile-nav" aria-label="Мобильная навигация" hidden>
-    <a href="#approach">Подход</a>
-    <a href="#group">Обучение в группе</a>
-    <a href="#courses">Направления</a>
-    <a href="#about">О Дарине</a>
-    <a href="#courses" class="mobile-nav-cta">Выбрать направление ↗</a>
+  <nav class="mobile-nav" id="mobile-nav" aria-label="Мобильная навигация" hidden>
+    <a href="#method">Как учимся</a>
+    <a href="#courses">Курсы</a>
+    <a href="#about">О проекте</a>
+    <a href="#courses" class="mobile-nav-cta">Выбрать курс ↗</a>
   </nav>
 
   <main id="main">
-    <section class="hero section-shell" id="top">
+    <section class="hero section-wrap">
       <div class="hero-copy">
-        <p class="eyebrow"><span class="eyebrow-dot"></span> ЕГЭ · ОГЭ · подготовка в группе</p>
-        <h1>Не просто<br>подготовиться.<br><em>Понять, что ты можешь.</em></h1>
-        <p class="hero-lede">Экзамен становится понятнее, когда вместо хаоса появляется маршрут, практика и люди, которые идут к похожей цели.</p>
+        <p class="eyebrow"><span class="eyebrow-dot"></span> ЕГЭ · ОГЭ · ЗАНЯТИЯ В ГРУППЕ</p>
+        <h1>Сдать экзамен.<br><span>Понимать,</span><br>что делаешь.</h1>
+        <p class="hero-lead">Подготовка — это не бесконечно решать варианты наугад. Это разобраться в теме, отработать задания и шаг за шагом увидеть свой прогресс.</p>
         <div class="hero-actions">
-          <a class="button button-dark" href="#courses">Найти свой курс <span aria-hidden="true">↗</span></a>
-          <a class="text-link" href="#approach">Как всё устроено <span aria-hidden="true">↓</span></a>
+          <a class="button button-primary" href="#courses">Подобрать курс <span aria-hidden="true">↗</span></a>
+          <a class="text-link" href="#method">Как устроено обучение <span aria-hidden="true">↓</span></a>
         </div>
-        <div class="hero-note"><span class="note-mark">✳</span><span>Групповой формат — учиться вместе, двигаться по плану, не оставаться один на один с подготовкой.</span></div>
+        <div class="hero-note"><span class="note-icon" aria-hidden="true">↳</span><p>Три шага: выбрать предмет, узнать формат, присоединиться к группе.</p></div>
       </div>
-      <div class="hero-art" aria-label="Иллюстрация учебного процесса">
-        <div class="art-topline"><span>ПОДГОТОВКА СМЫСЛОМ</span><span>01 / 04</span></div>
-        <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
-        <div class="hero-sun"></div>
-        <div class="hero-paper paper-back"><span>ПЛАН</span><i></i><i></i><i></i></div>
-        <div class="hero-paper paper-front"><span class="paper-label">ТВОЙ МАРШРУТ</span><div class="paper-big">шаг<br><em>за шагом</em></div><div class="paper-rule"></div><div class="paper-check"><b>✓</b> Разобраться</div><div class="paper-check"><b>✓</b> Потренироваться</div><div class="paper-check"><b>↗</b> Стать увереннее</div></div>
-        <div class="floating-tag tag-left"><span class="tag-icon">✳</span><span>Не зубрить<br>наугад</span></div>
-        <div class="floating-tag tag-right"><span class="tag-number">02</span><span>Практика<br>по плану</span></div>
-        <div class="art-caption">БОЛЬШЕ ЯСНОСТИ.<br>МЕНЬШЕ СЛУЧАЙНОСТИ.</div>
-      </div>
-      <div class="hero-bottom"><span>01 — СНАЧАЛА ПОНЯТЬ</span><span>02 — ЗАТЕМ ПРАКТИКОВАТЬСЯ</span><span>03 — ВИДЕТЬ СВОЙ ПРОГРЕСС</span></div>
-    </section>
-
-    <section class="intro-band">
-      <div class="section-shell intro-grid">
-        <p class="eyebrow">НЕ ОБЕЩАНИЕ ЧУДА</p>
-        <p class="intro-statement">Хорошая подготовка — это не магическая кнопка. Это <em>понятная система</em>, в которой ты знаешь, что делать сегодня и зачем.</p>
-        <span class="intro-star" aria-hidden="true">✳</span>
+      <div class="hero-art" aria-label="Графическая композиция о подготовке к экзаменам">
+        <div class="art-topline"><span>ПОДГОТОВКА БЕЗ ХАОСА</span><span>01 / 03</span></div>
+        <div class="art-sheet">
+          <div class="sheet-label">РАБОЧИЙ ПРИНЦИП</div>
+          <div class="sheet-title">Понять.<br>Решить.<br><span>Закрепить.</span></div>
+          <div class="sheet-rule"></div>
+          <div class="sheet-bottom"><span>ТЕМА</span><span>ПРАКТИКА</span><span>РАЗБОР</span></div>
+        </div>
+        <div class="art-stamp"><span>НЕ ЗУБРИТЬ.</span><strong>РАЗОБРАТЬСЯ.</strong></div>
+        <div class="art-footer"><span>ПОДГОТОВКА К ЕГЭ И ОГЭ</span><span>© ДН</span></div>
       </div>
     </section>
 
-    <section class="section-shell section approach-section" id="approach">
+    <section class="ticker" aria-label="Предметы">
+      <div class="ticker-inner"><span>ФИЗИКА</span><i>✳</i><span>МАТЕМАТИКА</span><i>✳</i><span>РУССКИЙ ЯЗЫК</span><i>✳</i><span>ОГЭ И ЕГЭ</span><i>✳</i><span>ФИЗИКА</span><i>✳</i><span>МАТЕМАТИКА</span></div>
+    </section>
+
+    <section class="section section-wrap method" id="method">
       <div class="section-heading">
         <p class="eyebrow">01 / ПОДХОД</p>
-        <h2>Почему такой<br><em>формат работает</em></h2>
-        <p class="section-description">Мы строим подготовку вокруг процесса: объяснение, применение, обратная связь и следующий шаг. Не вокруг громких обещаний.</p>
+        <h2>Не просто смотреть уроки.<br><span>Учиться решать.</span></h2>
       </div>
-      <div class="principles-grid">
-        <article class="principle-card principle-featured"><div class="principle-index">01</div><div class="principle-icon">↗</div><h3>Есть маршрут</h3><p>Когда темы разложены по шагам, проще начать, удерживать темп и понимать, к чему возвращаться.</p><span class="card-foot">ОТ ПЛАНА К ДЕЙСТВИЮ</span></article>
-        <article class="principle-card"><div class="principle-index">02</div><div class="principle-icon">◎</div><h3>Практика — не потом</h3><p>Знания закрепляются через задачи и разбор ошибок. Важно не только увидеть решение, но и понять логику.</p><span class="card-foot">ПОНЯТЬ И ПРИМЕНИТЬ</span></article>
-        <article class="principle-card"><div class="principle-index">03</div><div class="principle-icon">✳</div><h3>Можно спросить</h3><p>В группе появляются вопросы, которые не всегда приходят в голову при самостоятельной подготовке.</p><span class="card-foot">УЧИТЬСЯ НЕ В ОДИНОЧКУ</span></article>
+      <div class="method-grid">
+        <article class="method-item">
+          <span class="item-number">01</span>
+          <div><h3>Разобраться в теме</h3><p>Сначала понять логику и смысл, а не запоминать решение как заклинание. Так легче перенести знания на незнакомое задание.</p></div>
+        </article>
+        <article class="method-item">
+          <span class="item-number">02</span>
+          <div><h3>Набить руку на практике</h3><p>Экзаменационный формат требует тренировки. Практика помогает заметить, где ошибка повторяется, и научиться её исправлять.</p></div>
+        </article>
+        <article class="method-item">
+          <span class="item-number">03</span>
+          <div><h3>Задавать вопросы</h3><p>Если шаг непонятен, его нужно прояснить. Не оставлять пробелы до момента, когда они начнут мешать решать целую задачу.</p></div>
+        </article>
       </div>
-      <p class="fine-print">Конкретная программа, расписание, формат обратной связи и состав группы уточняются перед записью.</p>
+      <p class="method-footnote">Это ориентир для подготовки, а не обещание конкретного балла: результат зависит от стартового уровня, регулярности и проделанной работы.</p>
     </section>
 
     <section class="group-section" id="group">
-      <div class="section-shell group-layout">
+      <div class="group-inner section-wrap">
         <div class="group-visual">
-          <div class="group-stamp">ВМЕСТЕ<br>К ЦЕЛИ <span>↗</span></div>
-          <div class="group-lines" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
-          <div class="group-note"><span class="note-asterisk">✳</span><div><b>Группа — это среда</b><p>Общий ритм, вопросы и движение по одной программе.</p></div></div>
+          <div class="group-card card-back"><span>ВОПРОС</span><strong>Почему<br>так?</strong><small>Обсуждаем ход решения</small></div>
+          <div class="group-card card-front"><span>ГРУППОВОЙ ФОРМАТ</span><strong>Учиться<br>вместе.</strong><div class="people-dots" aria-hidden="true"><i>А</i><i>М</i><i>+</i></div></div>
+          <span class="group-asterisk" aria-hidden="true">✳</span>
         </div>
         <div class="group-copy">
-          <p class="eyebrow">02 / ПОЧЕМУ В ГРУППЕ</p>
-          <h2>Ты не обязан<br>разбираться <em>в одиночку.</em></h2>
-          <p class="section-description">Групповой курс — это не «всем одно и то же, как получится». Это общий учебный маршрут и возможность учиться на вопросах и разборах вместе с другими.</p>
-          <div class="group-benefits">
-            <div class="benefit-row"><span class="benefit-count">01</span><div><h3>Общий темп</h3><p>Регулярные занятия помогают сделать подготовку частью недели, а не делом «когда-нибудь».</p></div></div>
-            <div class="benefit-row"><span class="benefit-count">02</span><div><h3>Вопросы других — тоже обучение</h3><p>Чужой вопрос может подсветить пробел, который ты сам пока не заметил.</p></div></div>
-            <div class="benefit-row"><span class="benefit-count">03</span><div><h3>Практика с понятной целью</h3><p>Задачи нужны не ради количества: важно видеть тип ошибки и понимать, как её исправить.</p></div></div>
-          </div>
-          <a class="text-link dark-link" href="#courses">Посмотреть направления <span aria-hidden="true">↗</span></a>
+          <p class="eyebrow"><span class="eyebrow-dot"></span> 02 / ФОРМАТ</p>
+          <h2>Группа — это<br>не «сам по себе<br>с видеоуроком».</h2>
+          <p class="group-intro">У группового курса есть общий маршрут: вы изучаете темы в одной последовательности и готовитесь к одной цели вместе с другими ребятами.</p>
+          <ul class="benefit-list">
+            <li><span>+</span><div><strong>Понятная структура</strong><p>Проходить материал последовательно, а не выбирать темы случайно.</p></div></li>
+            <li><span>+</span><div><strong>Общие вопросы — полезные ответы</strong><p>Вопрос одного ученика может помочь разобраться всей группе.</p></div></li>
+            <li><span>+</span><div><strong>Ритм подготовки</strong><p>Занятия и практика помогают удерживать фокус на экзамене.</p></div></li>
+          </ul>
+          <p class="small-note">Точное расписание, размер группы, проверка заданий и формат обратной связи зависят от конкретного курса — уточняйте их перед записью.</p>
         </div>
       </div>
     </section>
 
-    <section class="section-shell section courses-section" id="courses">
-      <div class="section-heading courses-heading">
-        <div><p class="eyebrow">03 / НАПРАВЛЕНИЯ</p><h2>С чего начнём<br><em>твой маршрут?</em></h2></div>
-        <p class="section-description">Выбери предмет и уровень. Перед записью проверь актуальность набора, расписание и условия в соответствующем Telegram-боте.</p>
+    <section class="section section-wrap courses" id="courses">
+      <div class="courses-heading">
+        <div><p class="eyebrow">03 / НАПРАВЛЕНИЯ</p><h2>С чего начнём?</h2></div>
+        <p>Выберите предмет и экзамен. Ссылка ведёт в Telegram-бот соответствующего направления, где можно узнать подробности.</p>
       </div>
-      <div class="courses-grid">
-        <article class="course-card course-physics"><div class="course-top"><span class="course-symbol">φ</span><span class="course-type">ЕГЭ / ОГЭ</span></div><div><p class="course-kicker">01 — ФИЗИКА</p><h3>Понять<br>законы, а не<br>зубрить формулы.</h3></div><a href="https://t.me/Alfred_physx_bot" target="_blank" rel="noopener noreferrer" class="course-link" aria-label="Уточнить условия курса физики в Telegram">Узнать о курсе <span>↗</span></a></article>
-        <article class="course-card course-math"><div class="course-top"><span class="course-symbol">∑</span><span class="course-type">ЕГЭ</span></div><div><p class="course-kicker">02 — МАТЕМАТИКА</p><h3>От непонятной<br>задачи — к<br>логике решения.</h3></div><a href="https://t.me/PF_Math_bot" target="_blank" rel="noopener noreferrer" class="course-link" aria-label="Уточнить условия курса математики ЕГЭ в Telegram">Узнать о курсе <span>↗</span></a></article>
-        <article class="course-card course-russian"><div class="course-top"><span class="course-symbol">А</span><span class="course-type">ЕГЭ</span></div><div><p class="course-kicker">03 — РУССКИЙ ЯЗЫК</p><h3>Писать и<br>аргументировать<br>увереннее.</h3></div><a href="https://t.me/Gog_ya_bot" target="_blank" rel="noopener noreferrer" class="course-link" aria-label="Уточнить условия курса русского языка ЕГЭ в Telegram">Узнать о курсе <span>↗</span></a></article>
-        <article class="course-card course-oge"><div class="course-top"><span class="course-symbol">√</span><span class="course-type">ОГЭ</span></div><div><p class="course-kicker">04 — МАТЕМАТИКА</p><h3>Собрать базу<br>и спокойно<br>решать задания.</h3></div><a href="https://t.me/M_OGE_bot" target="_blank" rel="noopener noreferrer" class="course-link" aria-label="Уточнить условия курса математики ОГЭ в Telegram">Узнать о курсе <span>↗</span></a></article>
+      <div class="course-grid">
+        <a class="course-card physics" href="https://t.me/Alfred_physx_bot" target="_blank" rel="noopener noreferrer">
+          <div class="course-top"><span class="course-tag">ЕГЭ / ОГЭ</span><span class="course-arrow" aria-hidden="true">↗</span></div>
+          <div class="course-symbol symbol-physics" aria-hidden="true"><span>F</span><i>→</i></div>
+          <div class="course-bottom"><h3>Физика</h3><p>От законов и формул к решению задач экзаменационного формата.</p><span class="course-link">Узнать о курсе <b>↗</b></span></div>
+        </a>
+        <a class="course-card math" href="https://t.me/PF_Math_bot" target="_blank" rel="noopener noreferrer">
+          <div class="course-top"><span class="course-tag">ЕГЭ</span><span class="course-arrow" aria-hidden="true">↗</span></div>
+          <div class="course-symbol symbol-math" aria-hidden="true"><span>∑</span><i>π</i></div>
+          <div class="course-bottom"><h3>Математика</h3><p>Разобраться в способах решения и отработать экзаменационные задания.</p><span class="course-link">Узнать о курсе <b>↗</b></span></div>
+        </a>
+        <a class="course-card russian" href="https://t.me/Gog_ya_bot" target="_blank" rel="noopener noreferrer">
+          <div class="course-top"><span class="course-tag">ЕГЭ</span><span class="course-arrow" aria-hidden="true">↗</span></div>
+          <div class="course-symbol symbol-russian" aria-hidden="true"><span>Аа</span><i>;</i></div>
+          <div class="course-bottom"><h3>Русский язык</h3><p>Систематизировать правила и научиться применять их в заданиях.</p><span class="course-link">Узнать о курсе <b>↗</b></span></div>
+        </a>
+        <a class="course-card oge" href="https://t.me/M_OGE_bot" target="_blank" rel="noopener noreferrer">
+          <div class="course-top"><span class="course-tag">ОГЭ</span><span class="course-arrow" aria-hidden="true">↗</span></div>
+          <div class="course-symbol symbol-oge" aria-hidden="true"><span>√x</span><i>＝</i></div>
+          <div class="course-bottom"><h3>Математика</h3><p>Подготовка к ОГЭ: укрепить базу и практиковаться на заданиях нужного типа.</p><span class="course-link">Узнать о курсе <b>↗</b></span></div>
+        </a>
       </div>
-      <p class="courses-disclaimer">Ссылки на Telegram взяты из предоставленного скриншота профиля. Перед публикацией подтвердите, что все боты актуальны и относятся к этим курсам.</p>
+      <p class="courses-disclaimer">Перед записью проверьте в Telegram актуальность набора, стоимость, даты старта и условия обучения.</p>
     </section>
 
-    <section class="why-section">
-      <div class="section-shell why-layout">
-        <div class="why-quote"><span class="quote-mark">“</span><p>Выбирай не только предмет. Выбирай подход, в котором тебе будет понятно, как двигаться дальше.</p><span class="quote-line"></span><span class="quote-caption">ПОДГОТОВКА С ПОНИМАНИЕМ</span></div>
-        <div class="why-copy"><p class="eyebrow">04 / ПОЧЕМУ ДАРИНА</p><h2>Человеческий язык.<br><em>Понятный процесс.</em></h2><p>В подготовке важны не только темы и задания. Важно, чтобы сложное можно было разобрать на понятные шаги, задать вопрос и не бояться признаться, что пока не получается.</p><p>Задача этого проекта — сделать путь к экзамену более ясным: показать направления, объяснить формат обучения и помочь выбрать следующий шаг без давления и обещаний «100 баллов каждому».</p><a class="button button-light" href="#about">Познакомиться ближе <span aria-hidden="true">↘</span></a></div>
+    <section class="why-section" id="about">
+      <div class="why-inner section-wrap">
+        <div class="why-title"><p class="eyebrow">04 / ПОЧЕМУ ЭТОТ ПРОЕКТ</p><h2>Выбирайте не по громким обещаниям.<br><span>Выбирайте по ясности.</span></h2></div>
+        <div class="why-copy">
+          <p class="why-lead">Хороший курс должен быть понятен ещё до оплаты.</p>
+          <p>Важно заранее знать, кто ведёт занятия, как проходит обучение, что входит в программу и куда обращаться с вопросами. Не нужно принимать решение только из-за красивого обещания «сдать на максимум».</p>
+          <div class="checklist">
+            <div><span>01</span><p><strong>Уточните, кто преподаёт.</strong> Попросите информацию о преподавателе и его опыте именно по вашему предмету.</p></div>
+            <div><span>02</span><p><strong>Уточните, что входит в курс.</strong> Занятия, домашние задания, проверка работ, обратная связь — всё это стоит прояснить заранее.</p></div>
+            <div><span>03</span><p><strong>Поймите, подходит ли вам группа.</strong> Спросите о размере группы, темпе и возможности разбирать непонятные темы.</p></div>
+          </div>
+          <a class="text-link dark-link" href="https://www.instagram.com/darinanogovitcyna/" target="_blank" rel="noopener noreferrer">Посмотреть Instagram Дарины <span aria-hidden="true">↗</span></a>
+        </div>
       </div>
     </section>
 
-    <section class="section-shell section about-section" id="about">
-      <div class="about-heading"><p class="eyebrow">05 / О ПРОЕКТЕ</p><h2>Сначала — доверие.<br><em>Потом — решение.</em></h2></div>
-      <div class="about-content"><p class="about-lede">Перед тем как записаться, нормально хотеть понять, кто ведёт обучение, как устроены занятия и за что ты платишь.</p><div class="about-checklist"><div><span>01</span><p><b>Узнай о преподавателях</b><br>Кто ведёт конкретный предмет и какой у него опыт.</p></div><div><span>02</span><p><b>Уточни устройство курса</b><br>Расписание, размер группы, проверка заданий и обратная связь.</p></div><div><span>03</span><p><b>Спроси про условия</b><br>Стоимость, пробное занятие, оплата и правила возврата.</p></div></div><p class="fine-print">Информация о личных достижениях, результатах учеников, отзывах и квалификации появится здесь после подтверждения и согласования фактов.</p></div>
-    </section>
-
-    <section class="final-cta">
-      <div class="section-shell final-cta-inner"><div><p class="eyebrow">ТВОЙ СЛЕДУЮЩИЙ ШАГ</p><h2>Не нужно знать<br>всё уже сейчас.</h2><p>Начни с предмета и задай вопросы о формате. Решение о записи можно принять, когда условия понятны.</p></div><a href="#courses" class="button button-dark">Выбрать направление <span aria-hidden="true">↗</span></a><span class="cta-spark" aria-hidden="true">✳</span></div>
+    <section class="final-cta section-wrap">
+      <div class="cta-index">СЛЕДУЮЩИЙ ШАГ / 05</div>
+      <div class="cta-content"><h2>Начните с предмета.<br><span>Остальное уточните.</span></h2><p>Откройте нужное направление в Telegram, узнайте условия и решите, подходит ли вам формат.</p></div>
+      <a class="button button-light" href="#courses">Выбрать направление <span aria-hidden="true">↗</span></a>
+      <div class="cta-outline" aria-hidden="true">ЕГЭ<br>ОГЭ</div>
     </section>
   </main>
 
-  <footer class="site-footer">
-    <div class="footer-top"><a class="wordmark footer-wordmark" href="#top">ДН<span>.</span></a><p>Подготовка к экзаменам<br>с ясным планом и смыслом.</p><a class="footer-up" href="#top">Наверх ↑</a></div>
-    <div class="footer-bottom"><span>© <span id="year"></span> Дарина Ноговицына</span><span>ЕГЭ / ОГЭ · Групповой формат</span><a href="https://www.instagram.com/darinanogovitcyna/" target="_blank" rel="noopener noreferrer">Instagram ↗</a></div>
+  <footer class="footer section-wrap">
+    <a class="brand footer-brand" href="#top"><span class="brand-mark">ДН</span><span class="brand-name">Дарина Ноговицына<small>подготовка к экзаменам</small></span></a>
+    <p>Информация о курсах и условиях — в соответствующем Telegram-боте.</p>
+    <a class="footer-instagram" href="https://www.instagram.com/darinanogovitcyna/" target="_blank" rel="noopener noreferrer">Instagram ↗</a>
+    <span class="copyright">© <span id="year"></span></span>
   </footer>
 </body>
 </html>
