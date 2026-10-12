@@ -139,6 +139,16 @@ const explorerOptions = [...document.querySelectorAll(".explorer-option")];
 let lastExplorerFocus = null;
 let activeSubject = "physics";
 let sceneSwapTimer = null;
+let sceneCleanupTimers = [];
+
+function clearSceneTimers() {
+  if (sceneSwapTimer !== null) {
+    window.clearTimeout(sceneSwapTimer);
+    sceneSwapTimer = null;
+  }
+  sceneCleanupTimers.forEach((timer) => window.clearTimeout(timer));
+  sceneCleanupTimers = [];
+}
 
 const subjectData = {
   physics: {
@@ -195,6 +205,7 @@ const subjectData = {
 function renderSubject(key, initial = false) {
   const data = subjectData[key];
   if (!data || !explorer) return;
+  clearSceneTimers();
   activeSubject = key;
   explorerOptions.forEach((button) => {
     const active = button.dataset.subject === key;
@@ -203,9 +214,9 @@ function renderSubject(key, initial = false) {
   });
   {
     explorerScene.classList.add("is-changing");
-    if (sceneSwapTimer) window.clearTimeout(sceneSwapTimer);
     sceneSwapTimer = window.setTimeout(() => {
-      explorerTitle.innerHTML = `${data.title}<span class="explorer-period">.</span>`;
+      sceneSwapTimer = null;
+      explorerTitle.replaceChildren(document.createTextNode(data.title), Object.assign(document.createElement("span"), { className: "explorer-period", textContent: "." }));
       explorerDescription.textContent = data.description;
       explorerCategory.textContent = data.category;
       explorerIndex.textContent = data.index;
@@ -223,14 +234,16 @@ function renderSubject(key, initial = false) {
       sceneCaption.textContent = data.caption;
       sceneArt.setAttribute("aria-label", `Анимированная визуализация: ${data.title}`);
       sceneArt.innerHTML = `<defs><filter id="scene-glow"><feGaussianBlur stdDeviation="5" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>${data.svg}`;
-      // Re-enter with a fresh animation after the wipe has covered the scene.
-      void sceneArt.getBoundingClientRect();
+      // New SVG nodes get a fresh draw animation without forcing a synchronous layout.
       explorerScene.classList.add("is-changing");
-      window.setTimeout(() => {
+      sceneCleanupTimers.push(window.setTimeout(() => {
+        if (activeSubject !== key) return;
         sceneArt.classList.remove("is-exiting");
         document.querySelectorAll(".scene-float-card").forEach((card) => card.classList.remove("is-exiting"));
-      }, reduceMotion ? 0 : 240);
-      window.setTimeout(() => explorerScene.classList.remove("is-changing"), reduceMotion ? 0 : 660);
+      }, reduceMotion ? 0 : 240));
+      sceneCleanupTimers.push(window.setTimeout(() => {
+        if (activeSubject === key) explorerScene.classList.remove("is-changing");
+      }, reduceMotion ? 0 : 660));
     }, initial ? 0 : 220);
   }
 }
@@ -263,13 +276,7 @@ explorer?.addEventListener("click", (event) => {
 });
 explorerOptions.forEach((button) => {
   button.addEventListener("click", () => {
-    if (button.dataset.subject === activeSubject) {
-      explorerScene.classList.remove("is-changing");
-      void sceneArt.getBoundingClientRect();
-      explorerScene.classList.add("is-changing");
-      window.setTimeout(() => explorerScene.classList.remove("is-changing"), reduceMotion ? 0 : 660);
-      return;
-    }
+    if (button.dataset.subject === activeSubject) return;
     renderSubject(button.dataset.subject);
   });
 });
