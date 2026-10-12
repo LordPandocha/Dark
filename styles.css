@@ -760,7 +760,22 @@ body {
   .course-explorer.is-open .explorer-cta,
   .course-explorer.is-open .explorer-scene,
   .course-explorer.is-scene-only .scene-art,
-  .course-explorer.is-scene-only .scene-float-card { animation:none !important; }
+  .course-explorer.is-scene-only .scene-float-card,
+  .course-explorer.is-scene-only .explorer-options { animation:none !important; }
   .course-explorer.is-open .explorer-cta,
   .course-explorer.is-open .explorer-cta.is-ready { transition:none !important; }
+  .course-explorer.is-scene-only .scene-art .scene-draw {
+    stroke-dashoffset:0 !important;
+    animation:none !important;
+  }
+  .course-explorer.is-scene-only .scene-particles circle,
+  .course-explorer.is-scene-only .scene-formula rect,
+  .course-explorer.is-scene-only .scene-ball circle:first-child {
+    opacity:1 !important;
+    transform:none !important;
+    animation:none !important;
+  }
+  .course-explorer.is-scene-only .scene-formula text { opacity:1 !important; animation:none !important; }
+  .course-explorer.is-scene-only .scene-float-card { opacity:1 !important; transform:none !important; }
+  .course-explorer.is-scene-only .scene-transition { display:none !important; }
 }
