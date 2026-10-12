@@ -66,6 +66,7 @@ jobs:
               await page.locator('[data-open-subject="physics"]').click();
               await page.waitForSelector('#course-explorer.is-open.is-scene-only');
               await page.waitForFunction(() => document.querySelector('#explorer-cta')?.classList.contains('is-ready'), null, { timeout: 6000 });
+              await page.waitForTimeout(700);
 
               const physics = await page.evaluate(() => {
                 const rect = el => {
@@ -94,6 +95,7 @@ jobs:
               await page.locator('.explorer-options [data-subject="math"]').click();
               await page.waitForFunction(() => document.querySelector('#explorer-scene')?.classList.contains('scene-math'));
               await page.waitForFunction(() => document.querySelector('#explorer-cta')?.classList.contains('is-ready'), null, { timeout: 6000 });
+              await page.waitForTimeout(700);
               const mathHref = await page.locator('#explorer-cta').evaluate(el => el.href);
               assert.equal(mathHref, 'https://t.me/PF_Math_bot', vp.name + ': math CTA URL mismatch');
 
@@ -102,6 +104,7 @@ jobs:
               await page.locator('.final-cta [data-open-selector]').click();
               await page.waitForSelector('#course-explorer.is-open:not(.is-scene-only)');
               await page.waitForFunction(() => document.querySelector('#explorer-cta')?.classList.contains('is-ready'), null, { timeout: 6000 });
+              await page.waitForTimeout(700);
               const selector = await page.evaluate(() => {
                 const el = document.querySelector('#explorer-cta');
                 const r = el.getBoundingClientRect();
