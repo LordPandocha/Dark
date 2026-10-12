@@ -126,8 +126,6 @@ a{color:inherit;text-decoration:none}button{font:inherit}
 .js .course-card .course-doodle .draw-line{stroke-dashoffset:1}
 .js .course-card.is-visible .course-doodle .draw-line{animation:stroke-write 1.05s calc(var(--draw-delay,0ms) + 180ms) var(--ease) forwards}
 .course-card:hover .course-doodle .draw-line{animation:stroke-write .85s var(--ease) both}
-.js .course-card.is-visible{will-change:opacity,transform}
-.js .course-card.is-visible:not(:hover):not(:focus-visible){will-change:auto}
 @media(prefers-reduced-motion:reduce){.reveal,.course-card,.course-card .course-doodle .draw-line{animation:none!important;transition:none!important;transform:none!important;opacity:1!important}}
 .course-bottom h3{margin:0 0 8px;font:500 25px/1.15 var(--serif);letter-spacing:-.03em}
 .course-bottom p{min-height:61px;margin:0 0 16px;color:var(--muted);font-size:11px;line-height:1.8}
