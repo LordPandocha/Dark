@@ -1,0 +1,133 @@
+name: Mobile UI smoke test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  chromium-mobile-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install Playwright
+        run: |
+          npm install --no-save playwright
+          npx playwright install --with-deps chromium
+      - name: Start local static server
+        run: |
+          mkdir -p artifacts
+          python3 -m http.server 4173 --bind 127.0.0.1 >/tmp/dark-http.log 2>&1 &
+          for i in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:4173/ >/dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/dark-http.log
+          exit 1
+      - name: Test desktop and mobile layouts
+        run: |
+          node <<'NODE'
+          const { chromium } = require('playwright');
+          const assert = require('node:assert/strict');
+
+          (async () => {
+            const browser = await chromium.launch({ headless: true, args: ['--no-sandbox'] });
+            const page = await browser.newPage({ deviceScaleFactor: 1 });
+            const runtimeErrors = [];
+            page.on('pageerror', error => runtimeErrors.push(error.message));
+
+            const viewports = [
+              { name: 'small-mobile', width: 360, height: 800 },
+              { name: 'android-tall', width: 675, height: 1450 },
+              { name: 'desktop', width: 1365, height: 900 },
+            ];
+
+            function assertInViewport(rect, width, height, name) {
+              assert.ok(rect.width > 0 && rect.height > 0, name + ' has no size: ' + JSON.stringify(rect));
+              assert.ok(rect.left >= -1, name + ' clips off left: ' + JSON.stringify(rect));
+              assert.ok(rect.right <= width + 1, name + ' clips off right: ' + JSON.stringify(rect));
+              assert.ok(rect.top >= -1, name + ' clips off top: ' + JSON.stringify(rect));
+              assert.ok(rect.bottom <= height + 1, name + ' clips off bottom: ' + JSON.stringify(rect));
+            }
+
+            for (const vp of viewports) {
+              await page.setViewportSize({ width: vp.width, height: vp.height });
+              await page.goto('http://127.0.0.1:4173/', { waitUntil: 'domcontentloaded' });
+              await page.locator('[data-open-subject="physics"]').click();
+              await page.waitForSelector('#course-explorer.is-open.is-scene-only');
+              await page.waitForFunction(() => document.querySelector('#explorer-cta')?.classList.contains('is-ready'), null, { timeout: 6000 });
+
+              const physics = await page.evaluate(() => {
+                const rect = el => {
+                  const r = el.getBoundingClientRect();
+                  return { left:r.left, right:r.right, top:r.top, bottom:r.bottom, width:r.width, height:r.height };
+                };
+                return {
+                  viewport:{ width:innerWidth, height:innerHeight },
+                  scene:rect(document.querySelector('#explorer-scene')),
+                  artwork:rect(document.querySelector('#scene-art')),
+                  cta:rect(document.querySelector('#explorer-cta')),
+                  menu:rect(document.querySelector('.explorer-options')),
+                  rootWidth:document.documentElement.scrollWidth,
+                  ctaVisible:getComputedStyle(document.querySelector('#explorer-cta')).visibility,
+                  ctaFont:getComputedStyle(document.querySelector('#explorer-cta')).fontSize,
+                };
+              });
+              assert.equal(physics.ctaVisible, 'visible', vp.name + ': Telegram CTA hidden');
+              assert.ok(physics.rootWidth <= vp.width + 1, vp.name + ': document has horizontal overflow: ' + JSON.stringify(physics));
+              assert.ok(physics.scene.left <= 1 && physics.scene.right >= vp.width - 1, vp.name + ': scene does not span viewport: ' + JSON.stringify(physics.scene));
+              assert.ok(physics.scene.top <= 1 && physics.scene.bottom >= vp.height - 1, vp.name + ': scene does not fill viewport: ' + JSON.stringify(physics.scene));
+              assertInViewport(physics.cta, vp.width, vp.height, vp.name + ' physics CTA');
+              assertInViewport(physics.menu, vp.width, vp.height, vp.name + ' subject menu');
+              await page.screenshot({ path: 'artifacts/' + vp.name + '-physics.png' });
+
+              await page.locator('.explorer-options [data-subject="math"]').click();
+              await page.waitForFunction(() => document.querySelector('#explorer-scene')?.classList.contains('scene-math'));
+              await page.waitForFunction(() => document.querySelector('#explorer-cta')?.classList.contains('is-ready'), null, { timeout: 6000 });
+              const mathHref = await page.locator('#explorer-cta').evaluate(el => el.href);
+              assert.equal(mathHref, 'https://t.me/PF_Math_bot', vp.name + ': math CTA URL mismatch');
+
+              await page.locator('#course-explorer .explorer-close').click();
+              await page.waitForFunction(() => document.querySelector('#course-explorer')?.hidden === true, null, { timeout: 3000 });
+              await page.locator('[data-open-selector]').click();
+              await page.waitForSelector('#course-explorer.is-open:not(.is-scene-only)');
+              await page.waitForFunction(() => document.querySelector('#explorer-cta')?.classList.contains('is-ready'), null, { timeout: 6000 });
+              const selector = await page.evaluate(() => {
+                const el = document.querySelector('#explorer-cta');
+                const r = el.getBoundingClientRect();
+                return {
+                  rect:{left:r.left,right:r.right,top:r.top,bottom:r.bottom,width:r.width,height:r.height},
+                  width:innerWidth,height:innerHeight,rootWidth:document.documentElement.scrollWidth,
+                  visible:getComputedStyle(el).visibility,
+                };
+              });
+              assert.equal(selector.visible, 'visible', vp.name + ': selector CTA hidden');
+              assert.ok(selector.rootWidth <= vp.width + 1, vp.name + ': selector introduces horizontal overflow: ' + JSON.stringify(selector));
+              assertInViewport(selector.rect, vp.width, vp.height, vp.name + ' selector CTA');
+              await page.screenshot({ path: 'artifacts/' + vp.name + '-course-selector.png' });
+              console.log('PASS ' + vp.name + ': scene=' + Math.round(physics.scene.width) + 'x' + Math.round(physics.scene.height) +
+                ', CTA=' + Math.round(physics.cta.width) + 'px, selector CTA=' + Math.round(selector.rect.width) + 'px');
+            }
+
+            assert.deepEqual(runtimeErrors, [], 'Browser runtime errors: ' + runtimeErrors.join(' | '));
+            await browser.close();
+          })().catch(error => { console.error(error); process.exit(1); });
+          NODE
+      - name: Upload browser screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mobile-ui-smoke-screenshots
+          path: artifacts/*.png
+          if-no-files-found: warn
+          retention-days: 3
