@@ -61,8 +61,10 @@ document.querySelectorAll("[data-split]").forEach((line) => {
 });
 
 // Draw SVG paths in sequence, giving each drawing its own hand-inked rhythm.
-document.querySelectorAll(".hero-doodle .draw-line, .method-icon .draw-line, .paper-back .draw-line, .cta-spark .draw-line").forEach((path, index) => {
-  path.style.setProperty("--draw-i", String(index));
+document.querySelectorAll(".hero-doodle, .method-icon svg, .paper-back svg, .cta-spark").forEach((drawing) => {
+  drawing.querySelectorAll(".draw-line").forEach((path, index) => {
+    path.style.setProperty("--draw-i", String(index));
+  });
 });
 document.querySelectorAll(".course-card").forEach((card, index) => {
   card.style.setProperty("--draw-delay", `${index * 90}ms`);
