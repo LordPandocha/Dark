@@ -71,7 +71,9 @@ document.querySelectorAll(".course-card").forEach((card, index) => {
 });
 
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-const revealTargets = document.querySelectorAll(".reveal");
+// Reveal regular content once. Course cards use a single group trigger below,
+// so their entrances form one deliberate sequence instead of racing separate observers.
+const revealTargets = document.querySelectorAll(".reveal:not(.course-card)");
 if (reduceMotion || !("IntersectionObserver" in window)) {
   revealTargets.forEach((element) => element.classList.add("is-visible"));
 } else {
@@ -84,6 +86,24 @@ if (reduceMotion || !("IntersectionObserver" in window)) {
   }, { threshold: 0.12, rootMargin: "0px 0px -35px 0px" });
 
   revealTargets.forEach((element) => observer.observe(element));
+}
+
+// Trigger the course-card sequence when the whole category arrives in view.
+// Keep is-visible permanently so returning to this section does not replay it.
+const courseGrid = document.querySelector(".course-grid");
+const courseCards = courseGrid ? [...courseGrid.querySelectorAll(".course-card")] : [];
+if (reduceMotion || !("IntersectionObserver" in window) || !courseGrid) {
+  courseCards.forEach((card) => card.classList.add("is-visible"));
+} else {
+  const courseObserver = new IntersectionObserver((entries, activeObserver) => {
+    if (!entries.some((entry) => entry.isIntersecting)) return;
+    courseCards.forEach((card, index) => {
+      card.style.setProperty("--delay", `${index * 150}ms`);
+      card.classList.add("is-visible");
+    });
+    activeObserver.disconnect();
+  }, { threshold: 0.18, rootMargin: "0px 0px -8% 0px" });
+  courseObserver.observe(courseGrid);
 }
 
 // Cursor light follows the pointer only on devices that actually have a mouse.
