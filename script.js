@@ -182,7 +182,7 @@ const subjectData = {
   basicMath: {
     index: "05", category: "БАЗОВАЯ МАТЕМАТИКА", title: "Математика базовый",
     description: "Освоить основные математические темы последовательно: разобрать понятный пример, попробовать самостоятельно и закрепить навык на практике.",
-    tags: ["БАЗОВЫЙ КУРС", "ОСНОВЫ", "ПОШАГОВАЯ ПРАКТИКА"], url: "https://www.instagram.com/darinanogovitcyna/",
+    tags: ["БАЗОВЫЙ КУРС", "ОСНОВЫ", "ПОШАГОВАЯ ПРАКТИКА"], url: "https://www.instagram.com/darinanogovitcyna/", cta: "Уточнить условия в Instagram",
     scene: "scene-basic-math", overline: "BASIC MATHEMATICS / 05", concept: "От основы к решению", caption: "КАЖДЫЙ ШАГ ДОБАВЛЯЕТ УВЕРЕННОСТИ",
     svg: `<g class="scene-axis"><path d="M65 470 H540 M110 515 V80"/><path d="M534 464 l6 6 -6 6 M104 85 l6 -6 6 6"/></g>
       <g class="scene-graph"><path class="scene-draw" pathLength="1" d="M115 418 L205 346 L295 278 L385 208 L490 126"/></g>
@@ -246,6 +246,7 @@ function renderSubject(key, initial = false) {
         return item;
       }));
       explorerCta.href = data.url;
+      explorerCta.firstChild.textContent = `${data.cta || "Открыть курс в Telegram"} `;
       explorerScene.className = `explorer-scene ${data.scene}`;
       document.querySelectorAll(".scene-float-card").forEach((card) => card.classList.add("is-exiting"));
       sceneOverline.textContent = data.overline;

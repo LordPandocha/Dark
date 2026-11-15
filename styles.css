@@ -113,7 +113,7 @@ a{color:inherit;text-decoration:none}button{font:inherit}
 .group-caveat{margin:18px 0 0;color:#73788e;font-size:10px;line-height:1.75}
 .courses-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:40px;margin-bottom:38px}.courses-heading .eyebrow{margin-bottom:18px}
 .courses-heading>p{max-width:350px;margin:0 0 5px;color:var(--muted);font-size:12px;line-height:1.9}
-.course-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px}
+.course-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}
 .course-card{display:flex;min-width:0;min-height:360px;flex-direction:column;justify-content:space-between;overflow:hidden;padding:19px 19px 17px;border:1.5px solid var(--ink);border-radius:26px;background:var(--paper);box-shadow:0 0 0 rgba(35,57,148,0);transition:transform .28s var(--ease),box-shadow .28s var(--ease),background .2s;transition-delay:0ms}
 .course-card:hover,.course-card:focus-visible{transform:translate(-5px,-5px);box-shadow:9px 9px 0 var(--blue);background:white}.js .course-card.reveal.is-visible:hover,.js .course-card.reveal.is-visible:focus-visible{transform:translate(-5px,-5px);box-shadow:9px 9px 0 var(--blue);background:white}
 .course-top{display:flex;align-items:center;justify-content:space-between;gap:8px}
@@ -864,3 +864,7 @@ body {
   .course-explorer.is-scene-only .scene-float-card { opacity:1 !important; transform:none !important; }
   .course-explorer.is-scene-only .scene-transition { display:none !important; }
 }
+
+/* Five subjects use a balanced 3 + 2 rhythm on wide screens. */
+.doodle-basic-math { color:#24645f; }
+.explorer-scene.scene-basic-math { background:#24645f; --scene-accent:#baf4d9; --scene-accent-2:#ffe96b; --scene-glow:rgba(186,244,217,.2); }
