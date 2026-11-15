@@ -179,6 +179,18 @@ const subjectData = {
       <g class="scene-labels"><text x="116" y="495">0</text><text x="512" y="495">x →</text><text x="73" y="105">y</text><text x="326" y="307">f(x)</text></g>
       <g fill="none" stroke="var(--scene-accent-2)" stroke-width="3"><path class="scene-draw" pathLength="1" d="M190 408 V470 M190 470 H110"/></g>`
   },
+  basicMath: {
+    index: "05", category: "БАЗОВАЯ МАТЕМАТИКА", title: "Математика базовый",
+    description: "Освоить основные математические темы последовательно: разобрать понятный пример, попробовать самостоятельно и закрепить навык на практике.",
+    tags: ["БАЗОВЫЙ КУРС", "ОСНОВЫ", "ПОШАГОВАЯ ПРАКТИКА"], url: "https://www.instagram.com/darinanogovitcyna/",
+    scene: "scene-basic-math", overline: "BASIC MATHEMATICS / 05", concept: "От основы к решению", caption: "КАЖДЫЙ ШАГ ДОБАВЛЯЕТ УВЕРЕННОСТИ",
+    svg: `<g class="scene-axis"><path d="M65 470 H540 M110 515 V80"/><path d="M534 464 l6 6 -6 6 M104 85 l6 -6 6 6"/></g>
+      <g class="scene-graph"><path class="scene-draw" pathLength="1" d="M115 418 L205 346 L295 278 L385 208 L490 126"/></g>
+      <g class="scene-particles"><circle cx="205" cy="346" r="9"/><circle cx="295" cy="278" r="9"/><circle cx="385" cy="208" r="9"/></g>
+      <g class="scene-formula"><rect x="135" y="130" width="190" height="74" rx="17"/><text x="230" y="176" text-anchor="middle">12 + 8 = 20</text></g>
+      <g class="scene-labels"><text x="115" y="495">ШАГ 1</text><text x="270" y="495">ШАГ 2</text><text x="430" y="495">УСПЕХ →</text></g>
+      <g fill="none" stroke="var(--scene-accent-2)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path class="scene-draw" pathLength="1" d="M330 350 l22 22 42 -48"/></g>`
+  },
   russian: {
     index: "03", category: "ЯЗЫК И СМЫСЛ", title: "Русский язык",
     description: "Разобрать правила по смыслу, увидеть структуру предложения и научиться замечать важные детали в заданиях и тексте.",
